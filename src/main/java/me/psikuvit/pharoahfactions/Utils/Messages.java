@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 
 public class Messages {
 
+    public static String INCORRECT_COMMAND = color("§cUnknown command");
+    public static String MUST_BE_PLAYER = color("§cYou need to be a player");
+
     public static List<String> color(List<String> msg) {
         return msg.stream().map(Messages::color).collect(Collectors.toList());
     }

@@ -40,7 +40,7 @@ public class CommandRegisterer implements CommandExecutor {
                     return true;
                 }
                 if (!isSenderPlayer && cmd.onlyPlayer()) {
-                    commandSender.sendMessage(Messages.color("§cYou need to be a player"));
+                    commandSender.sendMessage(Messages.MUST_BE_PLAYER);
                     return true;
                 }
                 args = this.move(args);
@@ -50,7 +50,7 @@ public class CommandRegisterer implements CommandExecutor {
             }
         }
         if (!found) {
-            commandSender.sendMessage(Messages.color("§cUnknown command"));
+            commandSender.sendMessage(Messages.INCORRECT_COMMAND);
         }
         return true;
     }
