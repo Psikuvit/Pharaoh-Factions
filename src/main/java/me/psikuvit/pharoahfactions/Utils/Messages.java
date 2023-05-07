@@ -2,6 +2,7 @@ package me.psikuvit.pharoahfactions.Utils;
 
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -12,6 +13,10 @@ public class Messages {
 
     public static String INCORRECT_COMMAND = color("§cUnknown command");
     public static String MUST_BE_PLAYER = color("§cYou need to be a player");
+
+    public static void sendMessage(Player receiver, String msg) {
+        receiver.sendMessage(color(msg));
+    }
 
     public static List<String> color(List<String> msg) {
         return msg.stream().map(Messages::color).collect(Collectors.toList());

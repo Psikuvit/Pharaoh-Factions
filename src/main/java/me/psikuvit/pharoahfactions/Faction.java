@@ -11,12 +11,14 @@ public class Faction {
     List<Player> members;
     Player owner;
     UUID uuid;
+    List<String> description;
 
-    public Faction(String name, List<Player> members, Player owner, UUID uuid) {
+    public Faction(String name, List<Player> members, Player owner, UUID uuid, List<String> description) {
         this.name = name;
         this.members = members;
         this.owner = owner;
         this.uuid = uuid;
+        this.description = description;
     }
 
     public String getName() {
@@ -33,5 +35,9 @@ public class Faction {
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public List<String> getDescription() {
+        return description;
     }
 }

@@ -11,7 +11,7 @@ public abstract class CommandAbstract
         this.plugin = plugin;
     }
 
-    public abstract void executeCommand(final String[] p0, final CommandSender p1);
+    public abstract void executeCommand(final String[] args, final CommandSender sender);
 
     public abstract String correctArg();
 
