@@ -20,6 +20,12 @@ public class FactionsMethods {
     public static void removeFaction(Faction faction) {
         factions.remove(faction);
     }
+    public static void addPlayerToFaction(Faction faction, Player player) {
+        faction.getMembers().add(player);
+    }
+    public static void removePlayerFromFaction(Faction faction, Player player) {
+        faction.getMembers().add(player);
+    }
     public static Faction getFactionByUUID(UUID uuid) {
         for (Faction faction : factions) {
             if (faction.getUuid().equals(uuid))
@@ -34,4 +40,5 @@ public class FactionsMethods {
         }
         return null;
     }
+
 }

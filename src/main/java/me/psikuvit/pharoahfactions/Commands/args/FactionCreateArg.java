@@ -35,11 +35,16 @@ public class FactionCreateArg extends CommandAbstract {
 
     @Override
     public boolean onlyPlayer() {
-        return false;
+        return true;
     }
 
     @Override
     public int requiredArg() {
+        return 0;
+    }
+
+    @Override
+    public int bypassArgLimit() {
         return 0;
     }
 }

@@ -1,5 +1,7 @@
 package me.psikuvit.pharoahfactions.Commands;
 
+import me.psikuvit.pharoahfactions.Commands.args.FactionCreateArg;
+import me.psikuvit.pharoahfactions.Commands.args.FactionsGUIArg;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.Utils.Messages;
 import org.bukkit.command.Command;
@@ -17,6 +19,8 @@ public class CommandRegisterer implements CommandExecutor {
 
     public CommandRegisterer(final Pharaoh_Factions plugin) {
         this.commandAbstractMap = new HashMap<>();
+        commandAbstractMap.put("create", new FactionCreateArg(plugin));
+        commandAbstractMap.put("gui", new FactionsGUIArg(plugin));
 
     }
 
@@ -31,13 +35,20 @@ public class CommandRegisterer implements CommandExecutor {
                 final int argsCount = args.length - 1;
                 final boolean isSenderPlayer = commandSender instanceof Player;
                 final CommandAbstract cmd = this.commandAbstractMap.get(cmdAlias);
-                if (argsCount > cmd.requiredArg()) {
-                    commandSender.sendMessage(Messages.color("§cCorrect usage: §e" + cmd.correctArg()));
-                    return true;
-                }
-                if (argsCount < cmd.requiredArg()) {
-                    commandSender.sendMessage(Messages.color("§cCorrect usage: §e" + cmd.correctArg()));
-                    return true;
+                if (cmd.bypassArgLimit() != 0) {
+                    if (argsCount > cmd.requiredArg()) {
+                        commandSender.sendMessage(Messages.color("§cCorrect usage: §e" + cmd.correctArg()));
+                        return true;
+                    }
+                    if (argsCount < cmd.requiredArg()) {
+                        commandSender.sendMessage(Messages.color("§cCorrect usage: §e" + cmd.correctArg()));
+                        return true;
+                    }
+                } else {
+                    if (argsCount > cmd.bypassArgLimit()) {
+                        commandSender.sendMessage(Messages.color("§cCorrect usage: §e" + cmd.correctArg()));
+                        return true;
+                    }
                 }
                 if (!isSenderPlayer && cmd.onlyPlayer()) {
                     commandSender.sendMessage(Messages.MUST_BE_PLAYER);

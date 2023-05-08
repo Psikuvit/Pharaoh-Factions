@@ -18,4 +18,6 @@ public abstract class CommandAbstract
     public abstract boolean onlyPlayer();
 
     public abstract int requiredArg();
+
+    public abstract int bypassArgLimit();
 }
