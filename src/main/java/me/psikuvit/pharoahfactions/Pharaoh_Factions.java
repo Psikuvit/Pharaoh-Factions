@@ -1,6 +1,7 @@
 package me.psikuvit.pharoahfactions;
 
-import me.psikuvit.pharoahfactions.Commands.CommandRegisterer;
+import me.psikuvit.pharoahfactions.commands.CommandRegisterer;
+import me.psikuvit.pharoahfactions.listeners.InventoryClickEventListener;
 import me.psikuvit.pharoahfactions.menusystem.PlayerMenuUtility;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +19,7 @@ public final class Pharaoh_Factions extends JavaPlugin {
         plugin = this;
 
         getCommand("factions").setExecutor(new CommandRegisterer(this));
+        getServer().getPluginManager().registerEvents(new InventoryClickEventListener(), this);
 
     }
 

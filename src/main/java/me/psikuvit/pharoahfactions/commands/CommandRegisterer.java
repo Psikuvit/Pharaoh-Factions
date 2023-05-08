@@ -1,9 +1,9 @@
-package me.psikuvit.pharoahfactions.Commands;
+package me.psikuvit.pharoahfactions.commands;
 
-import me.psikuvit.pharoahfactions.Commands.args.FactionCreateArg;
-import me.psikuvit.pharoahfactions.Commands.args.FactionsGUIArg;
+import me.psikuvit.pharoahfactions.commands.args.FactionCreateArg;
+import me.psikuvit.pharoahfactions.commands.args.FactionsGUIArg;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
-import me.psikuvit.pharoahfactions.Utils.Messages;
+import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,7 +35,7 @@ public class CommandRegisterer implements CommandExecutor {
                 final int argsCount = args.length - 1;
                 final boolean isSenderPlayer = commandSender instanceof Player;
                 final CommandAbstract cmd = this.commandAbstractMap.get(cmdAlias);
-                if (cmd.bypassArgLimit() != 0) {
+                if (cmd.bypassArgLimit() == 0) {
                     if (argsCount > cmd.requiredArg()) {
                         commandSender.sendMessage(Messages.color("§cCorrect usage: §e" + cmd.correctArg()));
                         return true;
@@ -44,8 +44,8 @@ public class CommandRegisterer implements CommandExecutor {
                         commandSender.sendMessage(Messages.color("§cCorrect usage: §e" + cmd.correctArg()));
                         return true;
                     }
-                } else {
-                    if (argsCount > cmd.bypassArgLimit()) {
+                } else if (cmd.bypassArgLimit() > 0) {
+                    if (argsCount < cmd.bypassArgLimit()) {
                         commandSender.sendMessage(Messages.color("§cCorrect usage: §e" + cmd.correctArg()));
                         return true;
                     }

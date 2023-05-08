@@ -2,8 +2,8 @@ package me.psikuvit.pharoahfactions.menusystem.menu;
 
 import me.psikuvit.pharoahfactions.Faction;
 import me.psikuvit.pharoahfactions.FactionsMethods;
-import me.psikuvit.pharoahfactions.Utils.Messages;
-import me.psikuvit.pharoahfactions.Utils.Utils;
+import me.psikuvit.pharoahfactions.utils.Messages;
+import me.psikuvit.pharoahfactions.utils.Utils;
 import me.psikuvit.pharoahfactions.menusystem.PaginatedMenu;
 import me.psikuvit.pharoahfactions.menusystem.PlayerMenuUtility;
 import org.bukkit.ChatColor;

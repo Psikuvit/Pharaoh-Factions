@@ -1,4 +1,4 @@
-package me.psikuvit.pharoahfactions.Commands;
+package me.psikuvit.pharoahfactions.commands;
 
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import org.bukkit.command.CommandSender;

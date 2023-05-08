@@ -1,4 +1,8 @@
 name: Pharoah-Factions
 version: '${project.version}'
 main: me.psikuvit.pharoahfactions.Pharaoh_Factions
-api-version: 1.16
+api-version: 1.13
+
+commands:
+  factions:
+    description: he

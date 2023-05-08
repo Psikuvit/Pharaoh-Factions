@@ -1,6 +1,6 @@
-package me.psikuvit.pharoahfactions.Commands.args;
+package me.psikuvit.pharoahfactions.commands.args;
 
-import me.psikuvit.pharoahfactions.Commands.CommandAbstract;
+import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.menusystem.menu.FactionsGUI;
 import org.bukkit.command.CommandSender;
@@ -35,6 +35,6 @@ public class FactionsGUIArg extends CommandAbstract {
 
     @Override
     public int bypassArgLimit() {
-        return 1;
+        return 0;
     }
 }

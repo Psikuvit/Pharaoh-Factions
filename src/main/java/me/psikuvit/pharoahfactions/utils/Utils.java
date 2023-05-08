@@ -1,6 +1,5 @@
-package me.psikuvit.pharoahfactions.Utils;
+package me.psikuvit.pharoahfactions.utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

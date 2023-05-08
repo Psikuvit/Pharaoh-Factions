@@ -1,4 +1,4 @@
-package me.psikuvit.pharoahfactions.Utils;
+package me.psikuvit.pharoahfactions.utils;
 
 
 import org.bukkit.ChatColor;
@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Messages {
+
 
     public static String INCORRECT_COMMAND = color("§cUnknown command");
     public static String MUST_BE_PLAYER = color("§cYou need to be a player");

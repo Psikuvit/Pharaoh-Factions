@@ -1,7 +1,7 @@
 package me.psikuvit.pharoahfactions.menusystem;
 
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
-import me.psikuvit.pharoahfactions.Utils.Messages;
+import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
