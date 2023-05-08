@@ -4,6 +4,7 @@ import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.Faction;
 import me.psikuvit.pharoahfactions.FactionsMethods;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
+import me.psikuvit.pharoahfactions.data.DataInterface;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class FactionCreateArg extends CommandAbstract {
+
     public FactionCreateArg(Pharaoh_Factions plugin) {
         super(plugin);
     }
@@ -26,6 +28,9 @@ public class FactionCreateArg extends CommandAbstract {
         Faction faction = new Faction(args[0], List.of(player), player, UUID.randomUUID(), List.of(description)); // creates the Faction
 
         FactionsMethods.addFaction(faction); // cache the Faction
+
+        DataInterface data = plugin.getData();
+        data.saveFactionData(faction);
 
         Messages.sendMessage(player, "&bFaction named: &f" + args[0] + " &bwas created");
 

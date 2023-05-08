@@ -1,6 +1,8 @@
 package me.psikuvit.pharoahfactions;
 
 import me.psikuvit.pharoahfactions.commands.CommandRegisterer;
+import me.psikuvit.pharoahfactions.data.DataInterface;
+import me.psikuvit.pharoahfactions.data.FactionsData;
 import me.psikuvit.pharoahfactions.listeners.InventoryClickEventListener;
 import me.psikuvit.pharoahfactions.menusystem.PlayerMenuUtility;
 import org.bukkit.entity.Player;
@@ -8,15 +10,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 
-public final class Pharaoh_Factions extends JavaPlugin {
+public class Pharaoh_Factions extends JavaPlugin {
 
     static Pharaoh_Factions plugin;
-    private static final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
+    private final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
+    DataInterface data;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         plugin = this;
+        data = new FactionsData();
 
         getCommand("factions").setExecutor(new CommandRegisterer(this));
         getServer().getPluginManager().registerEvents(new InventoryClickEventListener(), this);
@@ -28,7 +32,7 @@ public final class Pharaoh_Factions extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    public static PlayerMenuUtility getPlayerMenuUtility(Player p) {
+    public PlayerMenuUtility getPlayerMenuUtility(Player p) {
         PlayerMenuUtility playerMenuUtility;
         if (!(playerMenuUtilityMap.containsKey(p))) { //See if the player has a playermenuutility "saved" for them
 
@@ -45,5 +49,9 @@ public final class Pharaoh_Factions extends JavaPlugin {
 
     public static Pharaoh_Factions getInstance() {
         return plugin;
+    }
+
+    public DataInterface getData() {
+        return data;
     }
 }
