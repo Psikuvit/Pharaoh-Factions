@@ -4,7 +4,8 @@ import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.Faction;
 import me.psikuvit.pharoahfactions.FactionsMethods;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
-import me.psikuvit.pharoahfactions.data.DataInterface;
+import me.psikuvit.pharoahfactions.data.factions.FactionsDataInterface;
+import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -29,8 +30,12 @@ public class FactionCreateArg extends CommandAbstract {
 
         FactionsMethods.addFaction(faction); // cache the Faction
 
-        DataInterface data = plugin.getData();
-        data.saveFactionData(faction);
+        FactionsDataInterface factionsData = plugin.getFactionsData();
+        factionsData.saveFactionData(faction);
+
+        PlayerDataInterface playerData = plugin.getPlayerData();
+        playerData.createPlayer(player);
+        playerData.setPlayerFaction(player, faction);
 
         Messages.sendMessage(player, "&bFaction named: &f" + args[0] + " &bwas created");
 
@@ -53,6 +58,6 @@ public class FactionCreateArg extends CommandAbstract {
 
     @Override
     public int bypassArgLimit() {
-        return 1;
+        return 3;
     }
 }

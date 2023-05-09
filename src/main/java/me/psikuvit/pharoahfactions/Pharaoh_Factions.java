@@ -1,8 +1,10 @@
 package me.psikuvit.pharoahfactions;
 
 import me.psikuvit.pharoahfactions.commands.CommandRegisterer;
-import me.psikuvit.pharoahfactions.data.DataInterface;
-import me.psikuvit.pharoahfactions.data.FactionsData;
+import me.psikuvit.pharoahfactions.data.factions.FactionsDataFiles;
+import me.psikuvit.pharoahfactions.data.factions.FactionsDataInterface;
+import me.psikuvit.pharoahfactions.data.player.PlayerDataFiles;
+import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
 import me.psikuvit.pharoahfactions.listeners.InventoryClickEventListener;
 import me.psikuvit.pharoahfactions.menusystem.PlayerMenuUtility;
 import org.bukkit.entity.Player;
@@ -14,13 +16,15 @@ public class Pharaoh_Factions extends JavaPlugin {
 
     static Pharaoh_Factions plugin;
     private final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
-    DataInterface data;
+    FactionsDataInterface factionsData;
+    PlayerDataInterface playerData;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         plugin = this;
-        data = new FactionsData();
+        factionsData = new FactionsDataFiles();
+        playerData = new PlayerDataFiles();
 
         getCommand("factions").setExecutor(new CommandRegisterer(this));
         getServer().getPluginManager().registerEvents(new InventoryClickEventListener(), this);
@@ -51,7 +55,10 @@ public class Pharaoh_Factions extends JavaPlugin {
         return plugin;
     }
 
-    public DataInterface getData() {
-        return data;
+    public FactionsDataInterface getFactionsData() {
+        return factionsData;
+    }
+    public PlayerDataInterface getPlayerData() {
+        return playerData;
     }
 }

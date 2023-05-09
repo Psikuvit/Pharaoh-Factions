@@ -1,4 +1,4 @@
-package me.psikuvit.pharoahfactions.data;
+package me.psikuvit.pharoahfactions.data.factions;
 
 import me.psikuvit.pharoahfactions.Faction;
 import me.psikuvit.pharoahfactions.FactionsMethods;
@@ -16,9 +16,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class FactionsData implements DataInterface {
+public class FactionsDataFiles implements FactionsDataInterface {
 
-    public FactionsData() {
+    public FactionsDataFiles() {
         loadFactionData();
     }
 

@@ -1,12 +1,15 @@
 package me.psikuvit.pharoahfactions;
 
+import me.psikuvit.pharoahfactions.utils.FactionRanks;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 public class Faction {
 
+    HashMap<Player, FactionRanks> membersRank;
     String name;
     List<Player> members;
     Player owner;
@@ -19,6 +22,14 @@ public class Faction {
         this.owner = owner;
         this.uuid = uuid;
         this.description = description;
+        membersRank = new HashMap<>();
+        for (Player player : members) {
+            if (player.equals(owner)) {
+                membersRank.put(player, FactionRanks.OWNER);
+            } else {
+                membersRank.put(player, FactionRanks.MEMBER);
+            }
+        }
     }
 
     public String getName() {
@@ -39,5 +50,9 @@ public class Faction {
 
     public List<String> getDescription() {
         return description;
+    }
+
+    public HashMap<Player, FactionRanks> getMembersRank() {
+        return membersRank;
     }
 }
