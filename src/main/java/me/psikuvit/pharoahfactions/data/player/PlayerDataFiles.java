@@ -2,7 +2,6 @@ package me.psikuvit.pharoahfactions.data.player;
 
 import me.psikuvit.pharoahfactions.Faction;
 import me.psikuvit.pharoahfactions.FactionsMethods;
-import me.psikuvit.pharoahfactions.data.factions.FactionsDataInterface;
 import me.psikuvit.pharoahfactions.utils.FactionRanks;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -25,6 +24,16 @@ public class PlayerDataFiles implements PlayerDataInterface {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
+
+        yaml.set("Faction", null);
+        yaml.set("Rank-In_Faction", null);
+
+        try {
+            yaml.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -53,9 +62,25 @@ public class PlayerDataFiles implements PlayerDataInterface {
         }
 
     }
+    @Override
+    public void removePlayerFaction(Player player, Faction faction) {
+
+        File file = new File(plugin.getDataFolder(), "Players-Data/" + player.getUniqueId() + ".yml");
+        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
+
+        yaml.set("Faction", null);
+        yaml.set("Rank-In_Faction", null);
+
+        try {
+            yaml.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
-    public FactionRanks getRankInFaction(Player player, Faction faction) {
+    public FactionRanks getPlayerRank(Player player, Faction faction) {
         File file = new File(plugin.getDataFolder(), "Players-Data/" + player.getUniqueId() + ".yml");
         YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
 
@@ -74,6 +99,11 @@ public class PlayerDataFiles implements PlayerDataInterface {
             return;
 
         yaml.set("Rank-In_Faction", rank);
+    }
+
+    @Override
+    public boolean isInFaction(Player player) {
+        return getPlayerFaction(player) != null;
     }
 
 }

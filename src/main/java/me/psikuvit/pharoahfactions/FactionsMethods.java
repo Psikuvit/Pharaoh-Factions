@@ -1,5 +1,7 @@
 package me.psikuvit.pharoahfactions;
 
+import me.psikuvit.pharoahfactions.data.player.PlayerDataFiles;
+import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class FactionsMethods {
      */
     public static void addPlayerToFaction(Faction faction, Player player) {
         faction.getMembers().add(player);
+        PlayerDataInterface playerDataFiles = Pharaoh_Factions.getInstance().getPlayerData();
+        playerDataFiles.setPlayerFaction(player, faction);
     }
 
     /**
@@ -50,7 +54,10 @@ public class FactionsMethods {
      */
     public static void removePlayerFromFaction(Faction faction, Player player) {
         faction.getMembers().remove(player);
+        PlayerDataInterface playerDataFiles = Pharaoh_Factions.getInstance().getPlayerData();
+        playerDataFiles.removePlayerFaction(player, faction);
     }
+
 
     /**
      * This method is used to get the Faction from its uuid

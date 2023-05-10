@@ -9,6 +9,7 @@ import me.psikuvit.pharoahfactions.listeners.InventoryClickEventListener;
 import me.psikuvit.pharoahfactions.menusystem.PlayerMenuUtility;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 
@@ -28,6 +29,7 @@ public class Pharaoh_Factions extends JavaPlugin {
 
         getCommand("factions").setExecutor(new CommandRegisterer(this));
         getServer().getPluginManager().registerEvents(new InventoryClickEventListener(), this);
+
 
     }
 
