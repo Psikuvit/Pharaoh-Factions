@@ -14,9 +14,12 @@ import java.util.UUID;
 public class PlayerDataFiles implements PlayerDataInterface {
     @Override
     public void createPlayer(Player player) {
-        File file = new File(plugin.getDataFolder(), "Players-Data/" + player.getUniqueId() + ".yml");
+        File dataFolder = new File(plugin.getDataFolder(), "Players-Data/");
+        if (!dataFolder.exists()) {
+            dataFolder.mkdirs();
+        }
+        File file = new File(dataFolder, player.getUniqueId() + ".yml");
         if (!file.exists()) {
-            file.mkdirs();
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -40,8 +43,8 @@ public class PlayerDataFiles implements PlayerDataInterface {
         File file = new File(plugin.getDataFolder(), "Players-Data/" + player.getUniqueId() + ".yml");
         YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
 
-        yaml.set("Faction", faction.getUuid());
-        yaml.set("Rank-In_Faction", faction.getMembersRank().get(player));
+        yaml.set("Faction", String.valueOf(faction.getUuid()));
+        yaml.set("Rank-In_Faction", faction.getMembersRank().get(player).toString());
 
         try {
             yaml.save(file);

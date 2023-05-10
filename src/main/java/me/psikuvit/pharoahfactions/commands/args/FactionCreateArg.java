@@ -58,6 +58,6 @@ public class FactionCreateArg extends CommandAbstract {
 
     @Override
     public int bypassArgLimit() {
-        return 3;
+        return 2;
     }
 }

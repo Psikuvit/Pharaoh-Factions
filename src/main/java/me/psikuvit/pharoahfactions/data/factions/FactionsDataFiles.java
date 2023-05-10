@@ -24,9 +24,12 @@ public class FactionsDataFiles implements FactionsDataInterface {
 
     @Override
     public void createFactionData(Faction faction) {
-        File file = new File(plugin.getDataFolder(), "Factions/" + faction.getUuid() + ".yml");
+        File dataFolder = new File(plugin.getDataFolder(), "Factions/");
+        if (!dataFolder.exists()) {
+            dataFolder.mkdirs();
+        }
+        File file = new File(dataFolder, faction.getUuid() + ".yml");
         if (!file.exists()) {
-            file.mkdirs();
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -40,9 +43,9 @@ public class FactionsDataFiles implements FactionsDataInterface {
         createFactionData(faction);
         File file = new File(plugin.getDataFolder(), "Factions/" + faction.getUuid() + ".yml");
         YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
-        String owner = faction.getOwner().getDisplayName();
-        UUID uuid = faction.getUuid();
-        List<Player> members = faction.getMembers();
+        String owner = faction.getOwner().getName();
+        String uuid = String.valueOf(faction.getUuid());
+        List<String> members = faction.getMembers().stream().map(Player::getName).collect(Collectors.toList());
         String name = faction.getName();
         List<String> description = faction.getDescription();
         yaml.set("Faction-Name", name);
@@ -65,6 +68,9 @@ public class FactionsDataFiles implements FactionsDataInterface {
 
         // create a Path object for the folder
         Path folder = Paths.get(folderPath);
+        if (!plugin.getDataFolder().exists() || !(new File(folderPath).exists())) {
+            return;
+        }
 
         // get a stream of all files in the folder
         try (Stream<Path> fileStream = Files.list(folder)) {
