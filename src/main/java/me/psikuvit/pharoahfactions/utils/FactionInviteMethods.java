@@ -52,8 +52,10 @@ public class FactionInviteMethods {
             public void run() {
                 time++;
                 if (time == 300) {
-                    removeInvite(factionInvite);
-                    cancel();
+                    if (!getFactionInvites().isEmpty()) {
+                        removeInvite(factionInvite);
+                        cancel();
+                    }
                 }
             }
         }.runTaskTimer(Pharaoh_Factions.getInstance(), 6000, 0);

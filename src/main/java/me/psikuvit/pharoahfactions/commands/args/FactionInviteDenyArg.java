@@ -40,6 +40,8 @@ public class FactionInviteDenyArg extends CommandAbstract {
 
         PlayerDataInterface playerDataInterface = plugin.getPlayerData();
         playerDataInterface.getPendingInvites().put(invited, FactionInviteMethods.getFactionInvites()); // setting the invitations again after denying
+
+        Messages.sendMessage(invited, "&bYou successfully denied the invite from " + invited.getName());
     }
 
     @Override

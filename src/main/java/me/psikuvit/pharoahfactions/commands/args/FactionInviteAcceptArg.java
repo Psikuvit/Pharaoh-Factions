@@ -44,6 +44,8 @@ public class FactionInviteAcceptArg extends CommandAbstract {
 
         Faction faction = factionInvite.getFaction();
         addPlayerToFaction(faction, invited);
+
+        Messages.sendMessage(invited, "&bYou successfully joined the " + faction.getName() + " faction");
     }
 
     @Override

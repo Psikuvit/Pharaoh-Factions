@@ -29,6 +29,11 @@ public class FactionInviteArg extends CommandAbstract {
 
         Player invited = Bukkit.getPlayer(args[0]);
 
+        if (invited == null) {
+            Messages.sendMessage(player, "&cCouldn't find player");
+            return;
+        }
+
         if (player.equals(invited)) {
             Messages.sendMessage(player, "&cYou can't invite yourself");
             return;
@@ -67,6 +72,8 @@ public class FactionInviteArg extends CommandAbstract {
         invited.spigot().sendMessage(factionInvite.getInviteMessage());
 
         FactionInviteMethods.removeInviteTask(factionInvite);
+
+        Messages.sendMessage(player, "&3invite sent successfully");
 
 
     }

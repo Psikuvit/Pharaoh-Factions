@@ -30,13 +30,13 @@ public class FactionInvite {
                 .append("[Accept]")
                 .color(ChatColor.GREEN)
                 .bold(true)
-                .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/faction accept " + inviter.getName()))
+                .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/factions accept " + inviter.getName()))
                 .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to accept the invitation").create()))
                 .append("   ")
                 .append("[Deny]")
                 .color(ChatColor.RED)
                 .bold(true)
-                .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/faction deny " + inviter.getName()))
+                .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/factions deny " + inviter.getName()))
                 .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to deny the invitation").create()))
                 .create();
 

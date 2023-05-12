@@ -52,7 +52,7 @@ public class PlayerDataFiles implements PlayerDataInterface {
         YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
 
         yaml.set("Faction", String.valueOf(faction.getUuid()));
-        yaml.set("Rank-In_Faction", faction.getMembersRank().get(player).toString());
+        yaml.set("Rank-In_Faction", FactionRanks.MEMBER);
 
         try {
             yaml.save(file);
