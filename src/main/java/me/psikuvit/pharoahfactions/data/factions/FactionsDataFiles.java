@@ -84,7 +84,7 @@ public class FactionsDataFiles implements FactionsDataInterface {
                 List<String> members = yaml.getStringList("Faction-Members");
 
                 Faction faction = new Faction(name, members.stream().map(Bukkit::getPlayer).collect(Collectors.toList()), owner, uuid, description);
-                FactionsMethods.addFaction(faction);
+                addFaction(faction);
             });
 
         } catch (Exception e) {

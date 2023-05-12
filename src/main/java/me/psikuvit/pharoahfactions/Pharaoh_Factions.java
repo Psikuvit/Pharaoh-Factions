@@ -28,6 +28,7 @@ public class Pharaoh_Factions extends JavaPlugin {
         playerData = new PlayerDataFiles();
 
         getCommand("factions").setExecutor(new CommandRegisterer(this));
+        getCommand("factions").setTabCompleter(new CommandRegisterer(this));
         getServer().getPluginManager().registerEvents(new InventoryClickEventListener(), this);
 
 

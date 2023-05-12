@@ -6,14 +6,17 @@ import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class CommandRegisterer implements CommandExecutor {
+public class CommandRegisterer implements CommandExecutor, TabCompleter {
     private final Map<String, CommandAbstract> commandAbstractMap;
 
     public CommandRegisterer(final Pharaoh_Factions plugin) {
@@ -72,5 +75,23 @@ public class CommandRegisterer implements CommandExecutor {
         final String[] result = new String[args.length - 1];
         System.arraycopy(args, 1, result, 0, args.length - 1);
         return result;
+    }
+
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
+        if (args.length == 1) {
+            // Return available sub-commands as tab completions
+            List<String> completions = new ArrayList<>(commandAbstractMap.keySet());
+            completions.removeIf(cmdAlias -> !cmdAlias.toLowerCase().startsWith(args[0].toLowerCase()));
+            return completions;
+        } else if (args.length > 1) {
+            // Retrieve the CommandAbstract associated with the given sub-command
+            CommandAbstract cmd = commandAbstractMap.get(args[0].toLowerCase());
+            if (cmd != null) {
+                // Delegate tab completion to the associated CommandAbstract
+                return cmd.tabComplete(args);
+            }
+        }
+        return new ArrayList<>();
     }
 }

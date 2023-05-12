@@ -4,6 +4,8 @@ import me.psikuvit.pharoahfactions.FactionsMethods;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import org.bukkit.command.CommandSender;
 
+import java.util.List;
+
 public abstract class CommandAbstract implements FactionsMethods {
     protected Pharaoh_Factions plugin;
 
@@ -20,4 +22,6 @@ public abstract class CommandAbstract implements FactionsMethods {
     public abstract int requiredArg();
 
     public abstract int bypassArgLimit();
+
+    public abstract List<String> tabComplete(final String[] args);
 }

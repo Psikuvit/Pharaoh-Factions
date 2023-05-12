@@ -1,12 +1,10 @@
 package me.psikuvit.pharoahfactions.data.factions;
 
 import me.psikuvit.pharoahfactions.Faction;
+import me.psikuvit.pharoahfactions.FactionsMethods;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
-import org.bukkit.entity.Player;
 
-import java.util.List;
-
-public interface FactionsDataInterface {
+public interface FactionsDataInterface extends FactionsMethods {
 
     Pharaoh_Factions plugin = Pharaoh_Factions.getInstance();
 

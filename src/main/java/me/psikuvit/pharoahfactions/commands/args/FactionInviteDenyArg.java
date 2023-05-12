@@ -1,5 +1,6 @@
 package me.psikuvit.pharoahfactions.commands.args;
 
+import me.psikuvit.pharoahfactions.Faction;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
@@ -10,7 +11,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FactionInviteDenyArg extends CommandAbstract {
+
+    private Player p;
 
     public FactionInviteDenyArg(Pharaoh_Factions plugin) {
         super(plugin);
@@ -20,6 +26,7 @@ public class FactionInviteDenyArg extends CommandAbstract {
     public void executeCommand(String[] args, CommandSender sender) {
         Player invited = (Player) sender;
         Player inviter = Bukkit.getPlayer(args[0]);
+        p = invited;
 
         FactionInvite factionInvite = FactionInviteMethods.getInviteByInviter(inviter);
         if (factionInvite == null) { // check if the inviter invited the invited
@@ -53,5 +60,23 @@ public class FactionInviteDenyArg extends CommandAbstract {
     @Override
     public int bypassArgLimit() {
         return 0;
+    }
+
+    @Override
+    public List<String> tabComplete(String[] args) {
+        List<String> completions = new ArrayList<>();
+
+        // Provide tab completions for the 'gui' argument
+        switch (args.length) {
+            case 0: completions.add("deny");
+            case 1 : {
+                PlayerDataInterface playerDataInterface = plugin.getPlayerData();
+                List<FactionInvite> factionInvites = playerDataInterface.getPendingInvites().get(p);
+                for (FactionInvite factionInvite : factionInvites) {
+                    completions.add(factionInvite.getInviter().getDisplayName());
+                }
+            }
+        }
+        return completions;
     }
 }

@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -88,5 +89,16 @@ public class FactionInviteArg extends CommandAbstract {
     @Override
     public int bypassArgLimit() {
         return 0;
+    }
+    @Override
+    public List<String> tabComplete(String[] args) {
+        List<String> completions = new ArrayList<>();
+
+        // Provide tab completions for the 'gui' argument
+        if (args.length == 0) {
+            completions.add("invite");
+        }
+
+        return completions;
     }
 }

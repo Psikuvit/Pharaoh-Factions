@@ -1,7 +1,6 @@
 package me.psikuvit.pharoahfactions.data.player;
 
 import me.psikuvit.pharoahfactions.Faction;
-import me.psikuvit.pharoahfactions.FactionsMethods;
 import me.psikuvit.pharoahfactions.utils.FactionRanks;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -44,7 +43,7 @@ public class PlayerDataFiles implements PlayerDataInterface {
 
         UUID uuid = UUID.fromString(yaml.getString("Faction"));
 
-        return FactionsMethods.getFactionByUUID(uuid);
+        return getFactionByUUID(uuid);
     }
 
     @Override

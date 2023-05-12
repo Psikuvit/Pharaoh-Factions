@@ -1,6 +1,7 @@
 package me.psikuvit.pharoahfactions.data.player;
 
 import me.psikuvit.pharoahfactions.Faction;
+import me.psikuvit.pharoahfactions.FactionsMethods;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.utils.FactionInvite;
 import me.psikuvit.pharoahfactions.utils.FactionRanks;
@@ -9,7 +10,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.List;
 
-public interface PlayerDataInterface {
+public interface PlayerDataInterface extends FactionsMethods {
 
     Pharaoh_Factions plugin = Pharaoh_Factions.getInstance();
 

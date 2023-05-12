@@ -6,10 +6,12 @@ import me.psikuvit.pharoahfactions.FactionsMethods;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.data.factions.FactionsDataInterface;
 import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
+import me.psikuvit.pharoahfactions.utils.FactionInvite;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -59,5 +61,17 @@ public class FactionCreateArg extends CommandAbstract {
     @Override
     public int bypassArgLimit() {
         return 2;
+    }
+
+    @Override
+    public List<String> tabComplete(String[] args) {
+        List<String> completions = new ArrayList<>();
+
+        // Provide tab completions for the 'gui' argument
+        if (args.length == 0) {
+            completions.add("create");
+        }
+
+        return completions;
     }
 }

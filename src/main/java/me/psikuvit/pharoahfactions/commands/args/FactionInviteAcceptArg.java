@@ -12,7 +12,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FactionInviteAcceptArg extends CommandAbstract {
+
+    private Player p;
 
     public FactionInviteAcceptArg(Pharaoh_Factions plugin) {
         super(plugin);
@@ -22,6 +27,8 @@ public class FactionInviteAcceptArg extends CommandAbstract {
     public void executeCommand(String[] args, CommandSender sender) {
         Player invited = (Player) sender;
         Player inviter = Bukkit.getPlayer(args[0]);
+
+        p = invited;
 
         FactionInvite factionInvite = FactionInviteMethods.getInviteByInviter(inviter);
         if (factionInvite == null) { // check if the inviter invited the invited
@@ -57,5 +64,24 @@ public class FactionInviteAcceptArg extends CommandAbstract {
     @Override
     public int bypassArgLimit() {
         return 0;
+    }
+
+    @Override
+    public List<String> tabComplete(String[] args) {
+        List<String> completions = new ArrayList<>();
+
+        // Provide tab completions for the 'gui' argument
+        switch (args.length) {
+            case 0: completions.add("accept");
+            case 1 : {
+                PlayerDataInterface playerDataInterface = plugin.getPlayerData();
+                List<FactionInvite> factionInvites = playerDataInterface.getPendingInvites().get(p);
+                for (FactionInvite factionInvite : factionInvites) {
+                    completions.add(factionInvite.getInviter().getDisplayName());
+                }
+            }
+        }
+
+        return completions;
     }
 }
