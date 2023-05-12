@@ -1,7 +1,6 @@
 package me.psikuvit.pharoahfactions.commands;
 
-import me.psikuvit.pharoahfactions.commands.args.FactionCreateArg;
-import me.psikuvit.pharoahfactions.commands.args.FactionsGUIArg;
+import me.psikuvit.pharoahfactions.commands.args.*;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.command.Command;
@@ -21,6 +20,9 @@ public class CommandRegisterer implements CommandExecutor {
         this.commandAbstractMap = new HashMap<>();
         commandAbstractMap.put("create", new FactionCreateArg(plugin));
         commandAbstractMap.put("gui", new FactionsGUIArg(plugin));
+        commandAbstractMap.put("invite", new FactionInviteArg(plugin));
+        commandAbstractMap.put("accept", new FactionInviteAcceptArg(plugin));
+        commandAbstractMap.put("deny", new FactionInviteDenyArg(plugin));
 
     }
 

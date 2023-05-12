@@ -47,12 +47,16 @@ public class FactionInviteMethods {
 
     public static void removeInviteTask(FactionInvite factionInvite) {
         new BukkitRunnable() {
+            int time = 0;
             @Override
             public void run() {
-                removeInvite(factionInvite);
-
+                time++;
+                if (time == 300) {
+                    removeInvite(factionInvite);
+                    cancel();
+                }
             }
-        }.runTaskTimer(Pharaoh_Factions.getInstance(), 300, 0);
+        }.runTaskTimer(Pharaoh_Factions.getInstance(), 6000, 0);
     }
 
 }

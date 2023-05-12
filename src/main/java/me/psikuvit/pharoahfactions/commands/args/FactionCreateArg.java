@@ -28,7 +28,7 @@ public class FactionCreateArg extends CommandAbstract {
 
         Faction faction = new Faction(args[0], List.of(player), player, UUID.randomUUID(), List.of(description)); // creates the Faction
 
-        FactionsMethods.addFaction(faction); // cache the Faction
+        addFaction(faction); // cache the Faction
 
         FactionsDataInterface factionsData = plugin.getFactionsData();
         factionsData.saveFactionData(faction);

@@ -28,6 +28,11 @@ public class FactionInviteArg extends CommandAbstract {
 
         Player invited = Bukkit.getPlayer(args[0]);
 
+        if (player.equals(invited)) {
+            Messages.sendMessage(player, "&cYou can't invite yourself");
+            return;
+        }
+
         PlayerDataInterface playerData = Pharaoh_Factions.getInstance().getPlayerData();
         if (!playerData.isInFaction(player)) { // check if player is in a faction
             Messages.sendMessage(player, "&cYou are not in a faction");
