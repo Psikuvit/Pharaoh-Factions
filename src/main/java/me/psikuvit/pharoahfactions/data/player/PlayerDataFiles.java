@@ -102,7 +102,7 @@ public class PlayerDataFiles implements PlayerDataInterface {
 
     @Override
     public boolean isInFaction(Player player) {
-        return getPlayerFaction(player) != null;
+        return getPlayerFaction(player) == null;
     }
 
 }

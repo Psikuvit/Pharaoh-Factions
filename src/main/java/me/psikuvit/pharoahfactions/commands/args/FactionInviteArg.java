@@ -1,7 +1,6 @@
 package me.psikuvit.pharoahfactions.commands.args;
 
 import me.psikuvit.pharoahfactions.Faction;
-import me.psikuvit.pharoahfactions.FactionsMethods;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
@@ -40,7 +39,7 @@ public class FactionInviteArg extends CommandAbstract {
         }
 
         PlayerDataInterface playerData = Pharaoh_Factions.getInstance().getPlayerData();
-        if (!playerData.isInFaction(player)) { // check if player is in a faction
+        if (playerData.isInFaction(player)) { // check if player is in a faction
             Messages.sendMessage(player, "&cYou are not in a faction");
             return;
         }

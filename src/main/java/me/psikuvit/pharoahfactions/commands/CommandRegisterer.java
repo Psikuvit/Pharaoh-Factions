@@ -2,6 +2,8 @@ package me.psikuvit.pharoahfactions.commands;
 
 import me.psikuvit.pharoahfactions.commands.args.*;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
+import me.psikuvit.pharoahfactions.data.factions.FactionsDataInterface;
+import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
