@@ -1,9 +1,7 @@
 package me.psikuvit.pharoahfactions.commands;
 
-import me.psikuvit.pharoahfactions.commands.args.*;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
-import me.psikuvit.pharoahfactions.data.factions.FactionsDataInterface;
-import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
+import me.psikuvit.pharoahfactions.commands.args.*;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,7 +9,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +25,8 @@ public class CommandRegisterer implements CommandExecutor, TabCompleter {
         commandAbstractMap.put("invite", new FactionInviteArg(plugin));
         commandAbstractMap.put("accept", new FactionInviteAcceptArg(plugin));
         commandAbstractMap.put("deny", new FactionInviteDenyArg(plugin));
+        commandAbstractMap.put("delete", new FactionDeleteArg(plugin));
+        commandAbstractMap.put("pendinginvites", new PendingInvitesArg(plugin));
 
     }
 
