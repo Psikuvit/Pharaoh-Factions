@@ -1,11 +1,10 @@
 package me.psikuvit.pharoahfactions.commands.args;
 
-import me.psikuvit.pharoahfactions.Faction;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
-import me.psikuvit.pharoahfactions.utils.FactionInvite;
-import me.psikuvit.pharoahfactions.utils.FactionInviteMethods;
+import me.psikuvit.pharoahfactions.factions.FactionInvite;
+import me.psikuvit.pharoahfactions.factions.utils.FactionInviteMethods;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

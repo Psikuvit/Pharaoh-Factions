@@ -1,13 +1,10 @@
 package me.psikuvit.pharoahfactions.data.factions;
 
-import me.psikuvit.pharoahfactions.Faction;
-import me.psikuvit.pharoahfactions.FactionsMethods;
-import me.psikuvit.pharoahfactions.Pharaoh_Factions;
+import me.psikuvit.pharoahfactions.factions.Faction;
+import me.psikuvit.pharoahfactions.factions.utils.FactionMethods;
 
-public interface FactionsDataInterface extends FactionsMethods {
-
-    Pharaoh_Factions plugin = Pharaoh_Factions.getInstance();
-
+public interface FactionsDataInterface {
+    FactionMethods FACTION_METHODS = new FactionMethods();
     void createFactionData(Faction faction);
     void saveFactionData(Faction faction);
     void loadFactionData();

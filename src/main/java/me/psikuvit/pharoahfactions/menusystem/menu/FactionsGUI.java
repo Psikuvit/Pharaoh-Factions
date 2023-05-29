@@ -1,7 +1,8 @@
 package me.psikuvit.pharoahfactions.menusystem.menu;
 
-import me.psikuvit.pharoahfactions.Faction;
-import me.psikuvit.pharoahfactions.FactionsMethods;
+import me.psikuvit.pharoahfactions.Pharaoh_Factions;
+import me.psikuvit.pharoahfactions.factions.Faction;
+import me.psikuvit.pharoahfactions.factions.utils.FactionMethods;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import me.psikuvit.pharoahfactions.utils.Utils;
 import me.psikuvit.pharoahfactions.menusystem.PaginatedMenu;
@@ -15,10 +16,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class FactionsGUI extends PaginatedMenu implements FactionsMethods{
+public class FactionsGUI extends PaginatedMenu {
 
-    public FactionsGUI(PlayerMenuUtility playerMenuUtility) {
-        super(playerMenuUtility);
+    FactionMethods FACTION_METHODS = new FactionMethods();
+
+    public FactionsGUI(PlayerMenuUtility playerMenuUtility, Pharaoh_Factions plugin) {
+        super(playerMenuUtility, plugin);
     }
 
     @Override
@@ -35,7 +38,7 @@ public class FactionsGUI extends PaginatedMenu implements FactionsMethods{
     public void handleMenu(InventoryClickEvent e) {
 
         Player p = (Player) e.getWhoClicked();
-        List<Faction> factions = getFactions();
+        List<Faction> factions = FACTION_METHODS.getFactions();
         if (e.getCurrentItem().getType() == Material.BARRIER) {
             p.closeInventory();
         } else if (e.getCurrentItem().getType() == Material.DARK_OAK_BUTTON) {
@@ -61,7 +64,7 @@ public class FactionsGUI extends PaginatedMenu implements FactionsMethods{
     public void setMenuItems() {
         addMenuBorder();
 
-        List<Faction> factions = getFactions();
+        List<Faction> factions = FACTION_METHODS.getFactions();
 
         for (int i = 0; i < getMaxItemsPerPage(); i++) {
             index = getMaxItemsPerPage() * page + i;

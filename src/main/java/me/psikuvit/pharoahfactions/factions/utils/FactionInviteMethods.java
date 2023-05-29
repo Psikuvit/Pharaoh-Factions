@@ -1,16 +1,16 @@
-package me.psikuvit.pharoahfactions.utils;
+package me.psikuvit.pharoahfactions.factions.utils;
 
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
+import me.psikuvit.pharoahfactions.factions.FactionInvite;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FactionInviteMethods {
 
-    static List<FactionInvite> factionInvites = new ArrayList<>();
+    private static final List<FactionInvite> factionInvites = new ArrayList<>();
 
     /**
      * This method is used to get all pending invites
@@ -58,7 +58,7 @@ public class FactionInviteMethods {
                     }
                 }
             }
-        }.runTaskTimer(Pharaoh_Factions.getInstance(), 6000, 0);
+        }.runTaskTimer(Pharaoh_Factions.getPlugin(Pharaoh_Factions.class), 6000, 0);
     }
 
 }

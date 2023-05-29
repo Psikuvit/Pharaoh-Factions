@@ -1,12 +1,12 @@
 package me.psikuvit.pharoahfactions.commands.args;
 
-import me.psikuvit.pharoahfactions.Faction;
+import me.psikuvit.pharoahfactions.factions.Faction;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
-import me.psikuvit.pharoahfactions.utils.FactionInvite;
-import me.psikuvit.pharoahfactions.utils.FactionInviteMethods;
-import me.psikuvit.pharoahfactions.utils.FactionRanks;
+import me.psikuvit.pharoahfactions.factions.FactionInvite;
+import me.psikuvit.pharoahfactions.factions.utils.FactionInviteMethods;
+import me.psikuvit.pharoahfactions.factions.utils.FactionRanks;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -38,7 +38,7 @@ public class FactionInviteArg extends CommandAbstract {
             return;
         }
 
-        PlayerDataInterface playerData = Pharaoh_Factions.getInstance().getPlayerData();
+        PlayerDataInterface playerData = plugin.getPlayerData();
         if (playerData.isInFaction(player)) { // check if player is in a faction
             Messages.sendMessage(player, "&cYou are not in a faction");
             return;

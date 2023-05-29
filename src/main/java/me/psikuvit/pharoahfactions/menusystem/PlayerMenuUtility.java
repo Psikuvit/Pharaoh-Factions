@@ -2,14 +2,16 @@ package me.psikuvit.pharoahfactions.menusystem;
 
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class PlayerMenuUtility {
 
-    private final Player owner;
-    public PlayerMenuUtility(Player p) {
-        this.owner = p;
+    private final UUID owner;
+    public PlayerMenuUtility(UUID owner) {
+        this.owner = owner;
     }
 
-    public Player getOwner() {
+    public UUID getOwner() {
         return owner;
     }
 }

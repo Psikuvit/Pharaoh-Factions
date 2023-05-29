@@ -1,6 +1,7 @@
 package me.psikuvit.pharoahfactions.utils;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -10,7 +11,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Messages {
-
 
     public static String INCORRECT_COMMAND = color("§cUnknown command");
     public static String MUST_BE_PLAYER = color("§cYou need to be a player");
@@ -33,5 +33,8 @@ public class Messages {
             matcher = pattern.matcher(message);
         }
         return ChatColor.translateAlternateColorCodes('&', message);
+    }
+    public static void log(String message) {
+        Bukkit.getLogger().info(message);
     }
 }

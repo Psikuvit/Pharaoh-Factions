@@ -17,7 +17,7 @@ public class FactionsGUIArg extends CommandAbstract {
     @Override
     public void executeCommand(String[] args, CommandSender sender) {
         Player player = (Player) sender;
-        new FactionsGUI(plugin.getPlayerMenuUtility(player)).open(player);
+        new FactionsGUI(plugin.getPlayerMenuUtility(player), plugin).open(player);
 
     }
 

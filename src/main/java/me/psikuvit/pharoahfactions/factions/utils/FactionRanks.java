@@ -1,4 +1,4 @@
-package me.psikuvit.pharoahfactions.utils;
+package me.psikuvit.pharoahfactions.factions.utils;
 
 public enum FactionRanks {
     OWNER,

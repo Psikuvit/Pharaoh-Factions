@@ -1,5 +1,6 @@
 package me.psikuvit.pharoahfactions.menusystem;
 
+import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -16,8 +17,8 @@ public abstract class PaginatedMenu extends Menu {
     //that the loop is on
     protected int index = 0;
 
-    public PaginatedMenu(PlayerMenuUtility playerMenuUtility) {
-        super(playerMenuUtility);
+    public PaginatedMenu(PlayerMenuUtility playerMenuUtility, Pharaoh_Factions plugin) {
+        super(playerMenuUtility, plugin);
     }
 
     //Set the border and menu buttons for the menu

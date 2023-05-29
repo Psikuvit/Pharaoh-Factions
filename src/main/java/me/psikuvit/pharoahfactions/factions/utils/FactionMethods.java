@@ -1,22 +1,23 @@
-package me.psikuvit.pharoahfactions;
+package me.psikuvit.pharoahfactions.factions.utils;
 
-import me.psikuvit.pharoahfactions.data.player.PlayerDataFiles;
+import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
+import me.psikuvit.pharoahfactions.factions.Faction;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public interface FactionsMethods {
+public class FactionMethods {
 
-    List<Faction> factions = new ArrayList<>();
+    private final List<Faction> factions = new ArrayList<>();
 
     /**
      * This method is used to get all cached Factions
      * @return all cached Factions
      */
-    default List<Faction> getFactions() {
+    public List<Faction> getFactions() {
         return factions;
     }
 
@@ -24,7 +25,7 @@ public interface FactionsMethods {
      * This method is used to cache the Faction
      * @param faction faction to cache
      */
-    default void addFaction(Faction faction) {
+    public void addFaction(Faction faction) {
         factions.add(faction);
     }
 
@@ -32,7 +33,7 @@ public interface FactionsMethods {
      * This method is used to delete the Faction
      * @param faction faction to delete
      */
-    default void removeFaction(Faction faction) {
+    public void removeFaction(Faction faction) {
         factions.remove(faction);
     }
 
@@ -41,9 +42,9 @@ public interface FactionsMethods {
      * @param faction faction to add player from it
      * @param player player to add
      */
-    default void addPlayerToFaction(Faction faction, Player player) {
+    public void addPlayerToFaction(Faction faction, Player player) {
         faction.getMembers().add(player);
-        PlayerDataInterface playerDataFiles = Pharaoh_Factions.getInstance().getPlayerData();
+        PlayerDataInterface playerDataFiles = Pharaoh_Factions.getPlugin(Pharaoh_Factions.class).getPlayerData();
         playerDataFiles.setPlayerFaction(player, faction);
     }
 
@@ -52,9 +53,9 @@ public interface FactionsMethods {
      * @param faction faction to remove player from it
      * @param player player to remove
      */
-    default void removePlayerFromFaction(Faction faction, Player player) {
+    public void removePlayerFromFaction(Faction faction, Player player) {
         faction.getMembers().remove(player);
-        PlayerDataInterface playerDataFiles = Pharaoh_Factions.getInstance().getPlayerData();
+        PlayerDataInterface playerDataFiles = Pharaoh_Factions.getPlugin(Pharaoh_Factions.class).getPlayerData();
         playerDataFiles.removePlayerFaction(player, faction);
     }
 
@@ -64,7 +65,7 @@ public interface FactionsMethods {
      * @param uuid uuid of the faction
      * @return the faction
      */
-    default Faction getFactionByUUID(UUID uuid) {
+    public Faction getFactionByUUID(UUID uuid) {
         for (Faction faction : factions) {
             if (faction.getUuid().equals(uuid))
                 return faction;
@@ -77,7 +78,7 @@ public interface FactionsMethods {
      * @param owner owner of the faction
      * @return the faction
      */
-    default Faction getFactionByOwner(Player owner) {
+    public Faction getFactionByOwner(Player owner) {
         for (Faction faction : factions) {
             if (faction.getOwner().equals(owner))
                 return faction;

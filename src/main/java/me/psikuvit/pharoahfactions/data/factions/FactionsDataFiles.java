@@ -1,7 +1,8 @@
 package me.psikuvit.pharoahfactions.data.factions;
 
-import me.psikuvit.pharoahfactions.Faction;
-import me.psikuvit.pharoahfactions.FactionsMethods;
+import me.psikuvit.pharoahfactions.Pharaoh_Factions;
+import me.psikuvit.pharoahfactions.factions.Faction;
+import me.psikuvit.pharoahfactions.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -18,7 +19,9 @@ import java.util.stream.Stream;
 
 public class FactionsDataFiles implements FactionsDataInterface {
 
-    public FactionsDataFiles() {
+    private final Pharaoh_Factions plugin;
+    public FactionsDataFiles(Pharaoh_Factions plugin) {
+        this.plugin = plugin;
         loadFactionData();
     }
 
@@ -66,17 +69,12 @@ public class FactionsDataFiles implements FactionsDataInterface {
     public void loadFactionData() {
         String folderPath = plugin.getDataFolder().getPath() + "/Factions";
 
-        // create a Path object for the folder
-        Path folder = Paths.get(folderPath);
-        if (!plugin.getDataFolder().exists() || !(new File(folderPath).exists())) {
-            return;
-        }
-
         // get a stream of all files in the folder
-        try (Stream<Path> fileStream = Files.list(folder)) {
+        try (Stream<Path> fileStream = Utils.getFilesInFolder(folderPath)) {
             // iterate through the stream and print the file names
             fileStream.forEach(file -> {
-                    YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file.toFile());
+                YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file.toFile());
+
                 String name = yaml.getString("Faction-Name");
                 Player owner = Bukkit.getPlayer(yaml.getString("Faction-Owner"));
                 UUID uuid = UUID.fromString(yaml.getString("Faction-UUID"));
@@ -84,7 +82,7 @@ public class FactionsDataFiles implements FactionsDataInterface {
                 List<String> members = yaml.getStringList("Faction-Members");
 
                 Faction faction = new Faction(name, members.stream().map(Bukkit::getPlayer).collect(Collectors.toList()), owner, uuid, description);
-                addFaction(faction);
+                FACTION_METHODS.addFaction(faction);
             });
 
         } catch (Exception e) {

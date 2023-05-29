@@ -1,6 +1,5 @@
-package me.psikuvit.pharoahfactions.utils;
+package me.psikuvit.pharoahfactions.factions;
 
-import me.psikuvit.pharoahfactions.Faction;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -10,10 +9,10 @@ import org.bukkit.entity.Player;
 
 public class FactionInvite {
 
-    Player inviter;
-    Player invited;
-    Faction faction;
-    BaseComponent[] baseComponent;
+    private final Player inviter;
+    private final Player invited;
+    private final Faction faction;
+    private final  BaseComponent[] baseComponent;
 
     public FactionInvite(Player inviter, Player invited, Faction faction) {
         this.inviter = inviter;

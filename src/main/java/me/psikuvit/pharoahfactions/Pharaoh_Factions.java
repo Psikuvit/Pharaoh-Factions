@@ -12,25 +12,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Pharaoh_Factions extends JavaPlugin {
 
-    static Pharaoh_Factions plugin;
-    private final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
-    FactionsDataInterface factionsData;
-    PlayerDataInterface playerData;
+    private final HashMap<UUID, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
+    private FactionsDataInterface factionsData;
+    private PlayerDataInterface playerData;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
-        plugin = this;
-        factionsData = new FactionsDataFiles();
-        playerData = new PlayerDataFiles();
+        factionsData = new FactionsDataFiles(this);
+        playerData = new PlayerDataFiles(this);
 
         Objects.requireNonNull(getCommand("factions")).setExecutor(new CommandRegisterer(this));
         Objects.requireNonNull(getCommand("factions")).setTabCompleter(new CommandRegisterer(this));
         getServer().getPluginManager().registerEvents(new InventoryClickEventListener(), this);
-
 
     }
 
@@ -40,24 +38,8 @@ public class Pharaoh_Factions extends JavaPlugin {
     }
 
     public PlayerMenuUtility getPlayerMenuUtility(Player p) {
-        PlayerMenuUtility playerMenuUtility;
-        if (!(playerMenuUtilityMap.containsKey(p))) { //See if the player has a playermenuutility "saved" for them
-
-            //This player doesn't. Make one for them add it to the hashmap
-            playerMenuUtility = new PlayerMenuUtility(p);
-            playerMenuUtilityMap.put(p, playerMenuUtility);
-
-            return playerMenuUtility;
-        } else {
-            return playerMenuUtilityMap.get(p); //Return the object by using the provided player
-        }
+        return playerMenuUtilityMap.computeIfAbsent(p.getUniqueId(), PlayerMenuUtility::new);
     }
-
-
-    public static Pharaoh_Factions getInstance() {
-        return plugin;
-    }
-
     public FactionsDataInterface getFactionsData() {
         return factionsData;
     }

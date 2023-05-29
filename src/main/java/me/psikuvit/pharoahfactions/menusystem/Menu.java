@@ -21,12 +21,12 @@ import java.util.List;
 public abstract class Menu implements InventoryHolder {
 
     //Protected values that can be accessed in the menus
-    protected Pharaoh_Factions plugin = Pharaoh_Factions.getInstance();
-
+    protected Pharaoh_Factions plugin;
     protected PlayerMenuUtility playerMenuUtility;
 
-    public Menu(PlayerMenuUtility playerMenuUtility) {
+    public Menu(PlayerMenuUtility playerMenuUtility, Pharaoh_Factions plugin) {
         this.playerMenuUtility = playerMenuUtility;
+        this.plugin = plugin;
     }
     protected Inventory inventory;
     protected ItemStack FILLER_GLASS = makeItem(Material.GRAY_STAINED_GLASS_PANE, " ");

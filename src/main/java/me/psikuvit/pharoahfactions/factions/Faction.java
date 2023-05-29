@@ -1,6 +1,6 @@
-package me.psikuvit.pharoahfactions;
+package me.psikuvit.pharoahfactions.factions;
 
-import me.psikuvit.pharoahfactions.utils.FactionRanks;
+import me.psikuvit.pharoahfactions.factions.utils.FactionRanks;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -9,12 +9,12 @@ import java.util.UUID;
 
 public class Faction {
 
-    HashMap<Player, FactionRanks> membersRank;
-    String name;
-    List<Player> members;
-    Player owner;
-    UUID uuid;
-    List<String> description;
+    private final HashMap<Player, FactionRanks> membersRank;
+    private final String name;
+    private final List<Player> members;
+    private final Player owner;
+    private final UUID uuid;
+    private final List<String> description;
 
     public Faction(String name, List<Player> members, Player owner, UUID uuid, List<String> description) {
         this.name = name;

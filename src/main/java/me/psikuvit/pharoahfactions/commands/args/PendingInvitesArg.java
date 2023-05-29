@@ -18,7 +18,7 @@ public class PendingInvitesArg extends CommandAbstract {
     @Override
     public void executeCommand(String[] args, CommandSender sender) {
         Player p = (Player) sender;
-        new PlayerPendingInvitesGUI(plugin.getPlayerMenuUtility(p)).open(p);
+        new PlayerPendingInvitesGUI(plugin.getPlayerMenuUtility(p), plugin).open(p);
 
     }
 

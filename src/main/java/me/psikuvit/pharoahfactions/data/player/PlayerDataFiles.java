@@ -1,7 +1,10 @@
 package me.psikuvit.pharoahfactions.data.player;
 
-import me.psikuvit.pharoahfactions.Faction;
-import me.psikuvit.pharoahfactions.utils.FactionRanks;
+import me.psikuvit.pharoahfactions.Pharaoh_Factions;
+import me.psikuvit.pharoahfactions.factions.Faction;
+import me.psikuvit.pharoahfactions.factions.utils.FactionRanks;
+import me.psikuvit.pharoahfactions.utils.Messages;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -10,6 +13,11 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class PlayerDataFiles implements PlayerDataInterface {
+
+    protected Pharaoh_Factions plugin;
+    public PlayerDataFiles(final Pharaoh_Factions plugin) {
+        this.plugin = plugin;
+    }
     @Override
     public void createPlayer(Player player) {
         File dataFolder = new File(plugin.getDataFolder(), "Players-Data/");
@@ -41,9 +49,16 @@ public class PlayerDataFiles implements PlayerDataInterface {
         File file = new File(plugin.getDataFolder(), "Players-Data/" + player.getUniqueId() + ".yml");
         YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
 
-        UUID uuid = UUID.fromString(yaml.getString("Faction"));
 
-        return getFactionByUUID(uuid);
+        String s = yaml.getString("Faction");
+        if (s == null) {
+            Messages.log("Couldn't find get player faction ID");
+            return null;
+        }
+
+        UUID uuid = UUID.fromString(s);
+
+        return FACTION_METHODS.getFactionByUUID(uuid);
     }
 
     @Override

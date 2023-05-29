@@ -3,7 +3,7 @@ package me.psikuvit.pharoahfactions.menusystem.menu;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.menusystem.PaginatedMenu;
 import me.psikuvit.pharoahfactions.menusystem.PlayerMenuUtility;
-import me.psikuvit.pharoahfactions.utils.FactionInvite;
+import me.psikuvit.pharoahfactions.factions.FactionInvite;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import me.psikuvit.pharoahfactions.utils.Utils;
 import org.bukkit.ChatColor;
@@ -18,8 +18,8 @@ import java.util.List;
 
 public class PlayerPendingInvitesGUI extends PaginatedMenu {
 
-    public PlayerPendingInvitesGUI(PlayerMenuUtility playerMenuUtility) {
-        super(playerMenuUtility);
+    public PlayerPendingInvitesGUI(PlayerMenuUtility playerMenuUtility, Pharaoh_Factions plugin) {
+        super(playerMenuUtility, plugin);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class PlayerPendingInvitesGUI extends PaginatedMenu {
     @Override
     public void handleMenu(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-        List<FactionInvite> invites = Pharaoh_Factions.getInstance().getPlayerData().getPendingInvites().get(playerMenuUtility.getOwner());
+        List<FactionInvite> invites = plugin.getPlayerData().getPendingInvites().get(playerMenuUtility.getOwner());
         if (e.getCurrentItem().getType() == Material.BARRIER) {
             p.closeInventory();
         } else if (e.getCurrentItem().getType() == Material.DARK_OAK_BUTTON) {
@@ -61,7 +61,7 @@ public class PlayerPendingInvitesGUI extends PaginatedMenu {
     public void setMenuItems() {
         addMenuBorder();
 
-        List<FactionInvite> invites = Pharaoh_Factions.getInstance().getPlayerData().getPendingInvites().get(playerMenuUtility.getOwner());
+        List<FactionInvite> invites = plugin.getPlayerData().getPendingInvites().get(playerMenuUtility.getOwner());
 
         for (int i = 0; i < getMaxItemsPerPage(); i++) {
             index = getMaxItemsPerPage() * page + i;

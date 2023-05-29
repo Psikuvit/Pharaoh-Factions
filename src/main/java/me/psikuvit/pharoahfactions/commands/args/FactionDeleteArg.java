@@ -1,16 +1,14 @@
 package me.psikuvit.pharoahfactions.commands.args;
 
-import me.psikuvit.pharoahfactions.Faction;
-import me.psikuvit.pharoahfactions.FactionsMethods;
+import me.psikuvit.pharoahfactions.factions.Faction;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
-import me.psikuvit.pharoahfactions.utils.FactionRanks;
+import me.psikuvit.pharoahfactions.factions.utils.FactionRanks;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FactionDeleteArg extends CommandAbstract {
 
