@@ -56,7 +56,7 @@ public class FactionMethods {
     public void removePlayerFromFaction(Faction faction, Player player) {
         faction.getMembers().remove(player);
         PlayerDataInterface playerDataFiles = Pharaoh_Factions.getPlugin(Pharaoh_Factions.class).getPlayerData();
-        playerDataFiles.removePlayerFaction(player, faction);
+        playerDataFiles.removePlayerFaction(player);
     }
 
 

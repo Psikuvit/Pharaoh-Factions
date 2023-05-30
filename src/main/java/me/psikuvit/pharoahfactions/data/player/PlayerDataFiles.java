@@ -3,116 +3,57 @@ package me.psikuvit.pharoahfactions.data.player;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.factions.Faction;
 import me.psikuvit.pharoahfactions.factions.utils.FactionRanks;
-import me.psikuvit.pharoahfactions.utils.Messages;
+import me.psikuvit.pharoahfactions.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PlayerDataFiles implements PlayerDataInterface {
 
-    protected Pharaoh_Factions plugin;
+    private final Pharaoh_Factions plugin;
+    private final HashMap<Player, Faction> playerFaction = new HashMap<>();
     public PlayerDataFiles(final Pharaoh_Factions plugin) {
         this.plugin = plugin;
-    }
-    @Override
-    public void createPlayer(Player player) {
-        File dataFolder = new File(plugin.getDataFolder(), "Players-Data/");
-        if (!dataFolder.exists()) {
-            dataFolder.mkdirs();
-        }
-        File file = new File(dataFolder, player.getUniqueId() + ".yml");
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
-
-        yaml.set("Faction", null);
-        yaml.set("Rank-In_Faction", null);
-
-        try {
-            yaml.save(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        loadFactionData();
     }
 
     @Override
     public Faction getPlayerFaction(Player player) {
-        File file = new File(plugin.getDataFolder(), "Players-Data/" + player.getUniqueId() + ".yml");
-        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
-
-
-        String s = yaml.getString("Faction");
-        if (s == null) {
-            Messages.log("Couldn't find get player faction ID");
-            return null;
-        }
-
-        UUID uuid = UUID.fromString(s);
-
-        return FACTION_METHODS.getFactionByUUID(uuid);
+        return playerFaction.get(player);
     }
 
     @Override
     public void setPlayerFaction(Player player, Faction faction) {
-        File file = new File(plugin.getDataFolder(), "Players-Data/" + player.getUniqueId() + ".yml");
-        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
-
-        yaml.set("Faction", String.valueOf(faction.getUuid()));
-        yaml.set("Rank-In_Faction", FactionRanks.MEMBER);
-
-        try {
-            yaml.save(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       playerFaction.put(player, faction);
 
     }
     @Override
-    public void removePlayerFaction(Player player, Faction faction) {
-
-        File file = new File(plugin.getDataFolder(), "Players-Data/" + player.getUniqueId() + ".yml");
-        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
-
-        yaml.set("Faction", null);
-        yaml.set("Rank-In_Faction", null);
-
-        try {
-            yaml.save(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void removePlayerFaction(Player player) {
+        playerFaction.remove(player);
 
     }
 
     @Override
-    public FactionRanks getPlayerRank(Player player, Faction faction) {
-        File file = new File(plugin.getDataFolder(), "Players-Data/" + player.getUniqueId() + ".yml");
-        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
+    public FactionRanks getPlayerRank(Player player) {
+        Faction faction = getPlayerFaction(player);
 
-        if (!faction.getMembers().contains(player))
-            return null;
-
-        return FactionRanks.valueOf(yaml.getString("Rank-In_Faction"));
+        return faction.getMembersRank().get(player);
 
     }
 
     @Override
-    public void setRankInFaction(Player player, Faction faction, FactionRanks rank) {
-        File file = new File(plugin.getDataFolder(), "Players-Data/" + player.getUniqueId() + ".yml");
-        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
-        if (!faction.getMembers().contains(player))
-            return;
-
-        yaml.set("Rank-In_Faction", rank);
+    public void setRankInFaction(Player player, FactionRanks rank) {
+        Faction faction = getPlayerFaction(player);
+        faction.getMembersRank().put(player, rank);
     }
 
     @Override
@@ -120,4 +61,57 @@ public class PlayerDataFiles implements PlayerDataInterface {
         return getPlayerFaction(player) == null;
     }
 
+    @Override
+    public void savePlayerData() {
+        File dataFolder = new File(plugin.getDataFolder(), "Players-Data/");
+        if (!dataFolder.exists()) {
+            dataFolder.mkdirs();
+        }
+        for (Player player : playerFaction.keySet()) {
+            File file = new File(dataFolder, player.getUniqueId() + ".yml");
+            if (!file.exists()) {
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
+
+            yaml.set("Faction", null);
+            yaml.set("Rank-In_Faction", null);
+
+            try {
+                yaml.save(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    @Override
+    public void loadFactionData() {
+        String folderPath = plugin.getDataFolder().getPath() + "/Factions";
+
+        // get a stream of all files in the folder
+        try (Stream<Path> fileStream = Utils.getFilesInFolder(folderPath)) {
+            // iterate through the stream and print the file names
+            fileStream.forEach(file -> {
+                YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file.toFile());
+
+                String name = yaml.getString("Faction-Name");
+                Player owner = Bukkit.getPlayer(yaml.getString("Faction-Owner"));
+                UUID uuid = UUID.fromString(yaml.getString("Faction-UUID"));
+                List<String> description = yaml.getStringList("Faction-Description");
+                List<String> members = yaml.getStringList("Faction-Members");
+
+                Faction faction = new Faction(name, members.stream().map(Bukkit::getPlayer).collect(Collectors.toList()), owner, uuid, description);
+                FACTION_METHODS.addFaction(faction);
+                playerFaction.put(owner, faction);
+            });
+
+        } catch (Exception e) {
+            // handle any exceptions that occur
+            e.printStackTrace();
+        }
+    }
 }

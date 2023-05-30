@@ -11,20 +11,18 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface PlayerDataInterface {
-
     FactionMethods FACTION_METHODS = new FactionMethods();
 
-    void createPlayer(Player player);
     Faction getPlayerFaction(Player player);
     void setPlayerFaction(Player player, Faction faction);
-    void removePlayerFaction(Player player, Faction faction);
-    FactionRanks getPlayerRank(Player player, Faction faction);
-    void setRankInFaction(Player player, Faction faction, FactionRanks rank);
+    void removePlayerFaction(Player player);
+    FactionRanks getPlayerRank(Player player);
+    void setRankInFaction(Player player, FactionRanks rank);
     boolean isInFaction(Player player);
     HashMap<Player, List<FactionInvite>> pendingInvites = new HashMap<>();
     default HashMap<Player, List<FactionInvite>> getPendingInvites() {
         return pendingInvites;
     }
-
-
+    void savePlayerData();
+    void loadFactionData();
 }

@@ -34,7 +34,6 @@ public class FactionCreateArg extends CommandAbstract {
         factionsData.saveFactionData(faction);
 
         PlayerDataInterface playerData = plugin.getPlayerData();
-        playerData.createPlayer(player);
         playerData.setPlayerFaction(player, faction);
 
         Messages.sendMessage(player, "&bFaction named: &f" + args[0] + " &bwas created");

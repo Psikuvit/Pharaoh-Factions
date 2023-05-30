@@ -44,7 +44,7 @@ public class FactionInviteArg extends CommandAbstract {
             return;
         }
         Faction faction = playerData.getPlayerFaction(player);
-        if (playerData.getPlayerRank(player, faction) == FactionRanks.MEMBER) {
+        if (playerData.getPlayerRank(player) == FactionRanks.MEMBER) {
             Messages.sendMessage(player, "&cYou're rank doesn't let you invite people");
             return;
         }

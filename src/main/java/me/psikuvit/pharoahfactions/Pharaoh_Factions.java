@@ -35,6 +35,7 @@ public class Pharaoh_Factions extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        getPlayerData().savePlayerData();
     }
 
     public PlayerMenuUtility getPlayerMenuUtility(Player p) {
