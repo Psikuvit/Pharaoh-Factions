@@ -9,18 +9,17 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public interface PlayerDataInterface {
-    FactionMethods FACTION_METHODS = new FactionMethods();
-
     Faction getPlayerFaction(Player player);
     void setPlayerFaction(Player player, Faction faction);
     void removePlayerFaction(Player player);
     FactionRanks getPlayerRank(Player player);
     void setRankInFaction(Player player, FactionRanks rank);
     boolean isInFaction(Player player);
-    HashMap<Player, List<FactionInvite>> pendingInvites = new HashMap<>();
-    default HashMap<Player, List<FactionInvite>> getPendingInvites() {
+    HashMap<UUID, List<FactionInvite>> pendingInvites = new HashMap<>();
+    default HashMap<UUID, List<FactionInvite>> getPendingInvites() {
         return pendingInvites;
     }
     void savePlayerData();

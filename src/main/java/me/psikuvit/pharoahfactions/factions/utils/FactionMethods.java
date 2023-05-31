@@ -11,13 +11,13 @@ import java.util.UUID;
 
 public class FactionMethods {
 
-    private final List<Faction> factions = new ArrayList<>();
+    private static final List<Faction> factions = new ArrayList<>();
 
     /**
      * This method is used to get all cached Factions
      * @return all cached Factions
      */
-    public List<Faction> getFactions() {
+    public static List<Faction> getFactions() {
         return factions;
     }
 
@@ -25,7 +25,7 @@ public class FactionMethods {
      * This method is used to cache the Faction
      * @param faction faction to cache
      */
-    public void addFaction(Faction faction) {
+    public static void addFaction(Faction faction) {
         factions.add(faction);
     }
 
@@ -33,7 +33,7 @@ public class FactionMethods {
      * This method is used to delete the Faction
      * @param faction faction to delete
      */
-    public void removeFaction(Faction faction) {
+    public static void removeFaction(Faction faction) {
         factions.remove(faction);
     }
 
@@ -42,7 +42,7 @@ public class FactionMethods {
      * @param faction faction to add player from it
      * @param player player to add
      */
-    public void addPlayerToFaction(Faction faction, Player player) {
+    public static void addPlayerToFaction(Faction faction, Player player) {
         faction.getMembers().add(player);
         PlayerDataInterface playerDataFiles = Pharaoh_Factions.getPlugin(Pharaoh_Factions.class).getPlayerData();
         playerDataFiles.setPlayerFaction(player, faction);
@@ -53,7 +53,7 @@ public class FactionMethods {
      * @param faction faction to remove player from it
      * @param player player to remove
      */
-    public void removePlayerFromFaction(Faction faction, Player player) {
+    public static void removePlayerFromFaction(Faction faction, Player player) {
         faction.getMembers().remove(player);
         PlayerDataInterface playerDataFiles = Pharaoh_Factions.getPlugin(Pharaoh_Factions.class).getPlayerData();
         playerDataFiles.removePlayerFaction(player);
@@ -65,7 +65,7 @@ public class FactionMethods {
      * @param uuid uuid of the faction
      * @return the faction
      */
-    public Faction getFactionByUUID(UUID uuid) {
+    public static Faction getFactionByUUID(UUID uuid) {
         for (Faction faction : factions) {
             if (faction.getUuid().equals(uuid))
                 return faction;
@@ -78,7 +78,7 @@ public class FactionMethods {
      * @param owner owner of the faction
      * @return the faction
      */
-    public Faction getFactionByOwner(Player owner) {
+    public static Faction getFactionByOwner(Player owner) {
         for (Faction faction : factions) {
             if (faction.getOwner().equals(owner))
                 return faction;

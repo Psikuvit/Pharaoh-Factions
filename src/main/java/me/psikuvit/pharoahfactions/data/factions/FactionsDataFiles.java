@@ -2,6 +2,8 @@ package me.psikuvit.pharoahfactions.data.factions;
 
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.factions.Faction;
+import me.psikuvit.pharoahfactions.factions.utils.FactionMethods;
+import me.psikuvit.pharoahfactions.factions.utils.FactionRanks;
 import me.psikuvit.pharoahfactions.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -47,16 +49,19 @@ public class FactionsDataFiles implements FactionsDataInterface {
         createFactionData(faction);
         File file = new File(plugin.getDataFolder(), "Factions/" + faction.getUuid() + ".yml");
         YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
+
         String owner = faction.getOwner().getName();
         String uuid = String.valueOf(faction.getUuid());
         List<String> members = faction.getMembers().stream().map(Player::getName).collect(Collectors.toList());
         String name = faction.getName();
         List<String> description = faction.getDescription();
+
         yaml.set("Faction-Name", name);
         yaml.set("Faction-Owner", owner);
         yaml.set("Faction-UUID", uuid);
         yaml.set("Faction-Description", description);
         yaml.set("Faction-Members", members);
+        yaml.set("Faction-Ranks", faction.getMembersRank());
         try {
             yaml.save(file);
         } catch (IOException e) {
@@ -83,7 +88,7 @@ public class FactionsDataFiles implements FactionsDataInterface {
                 List<String> members = yaml.getStringList("Faction-Members");
 
                 Faction faction = new Faction(name, members.stream().map(Bukkit::getPlayer).collect(Collectors.toList()), owner, uuid, description);
-                FACTION_METHODS.addFaction(faction);
+                FactionMethods.addFaction(faction);
             });
 
         } catch (Exception e) {

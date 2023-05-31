@@ -2,7 +2,9 @@ package me.psikuvit.pharoahfactions.data.player;
 
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.factions.Faction;
+import me.psikuvit.pharoahfactions.factions.utils.FactionMethods;
 import me.psikuvit.pharoahfactions.factions.utils.FactionRanks;
+import me.psikuvit.pharoahfactions.utils.Messages;
 import me.psikuvit.pharoahfactions.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -90,24 +92,23 @@ public class PlayerDataFiles implements PlayerDataInterface {
     }
     @Override
     public void loadFactionData() {
-        String folderPath = plugin.getDataFolder().getPath() + "/Factions";
+        String folderPath = plugin.getDataFolder().getPath() + "/Players-Data";
 
         // get a stream of all files in the folder
         try (Stream<Path> fileStream = Utils.getFilesInFolder(folderPath)) {
             // iterate through the stream and print the file names
-            fileStream.forEach(file -> {
+            for (Path file : fileStream.collect(Collectors.toList())) {
                 YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file.toFile());
+                String uuid = yaml.getString("Faction");
+                if (uuid == null) {
+                    Messages.log("Skipped player with uuid: " + file + ", Because he doesn't have a faction");
+                    continue;
+                }
 
-                String name = yaml.getString("Faction-Name");
-                Player owner = Bukkit.getPlayer(yaml.getString("Faction-Owner"));
-                UUID uuid = UUID.fromString(yaml.getString("Faction-UUID"));
-                List<String> description = yaml.getStringList("Faction-Description");
-                List<String> members = yaml.getStringList("Faction-Members");
-
-                Faction faction = new Faction(name, members.stream().map(Bukkit::getPlayer).collect(Collectors.toList()), owner, uuid, description);
-                FACTION_METHODS.addFaction(faction);
-                playerFaction.put(owner, faction);
-            });
+                Faction faction = FactionMethods.getFactionByUUID(UUID.fromString(uuid));
+                Player player = Bukkit.getPlayer(UUID.fromString(file.toString()));
+                playerFaction.put(player, faction);
+            };
 
         } catch (Exception e) {
             // handle any exceptions that occur

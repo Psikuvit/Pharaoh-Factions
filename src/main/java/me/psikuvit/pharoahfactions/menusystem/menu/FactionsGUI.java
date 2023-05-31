@@ -18,8 +18,6 @@ import java.util.List;
 
 public class FactionsGUI extends PaginatedMenu {
 
-    FactionMethods FACTION_METHODS = new FactionMethods();
-
     public FactionsGUI(PlayerMenuUtility playerMenuUtility, Pharaoh_Factions plugin) {
         super(playerMenuUtility, plugin);
     }
@@ -38,7 +36,7 @@ public class FactionsGUI extends PaginatedMenu {
     public void handleMenu(InventoryClickEvent e) {
 
         Player p = (Player) e.getWhoClicked();
-        List<Faction> factions = FACTION_METHODS.getFactions();
+        List<Faction> factions = FactionMethods.getFactions();
         if (e.getCurrentItem().getType() == Material.BARRIER) {
             p.closeInventory();
         } else if (e.getCurrentItem().getType() == Material.DARK_OAK_BUTTON) {
@@ -64,7 +62,7 @@ public class FactionsGUI extends PaginatedMenu {
     public void setMenuItems() {
         addMenuBorder();
 
-        List<Faction> factions = FACTION_METHODS.getFactions();
+        List<Faction> factions = FactionMethods.getFactions();
 
         for (int i = 0; i < getMaxItemsPerPage(); i++) {
             index = getMaxItemsPerPage() * page + i;

@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class FactionInviteArg extends CommandAbstract {
 
@@ -49,7 +50,7 @@ public class FactionInviteArg extends CommandAbstract {
             return;
         }
 
-        HashMap<Player, List<FactionInvite>> pendingInvites = playerData.getPendingInvites();
+        HashMap<UUID, List<FactionInvite>> pendingInvites = playerData.getPendingInvites();
 
         if (!pendingInvites.isEmpty()) {
             for (List<FactionInvite> invites : pendingInvites.values()) {
@@ -66,7 +67,7 @@ public class FactionInviteArg extends CommandAbstract {
         FactionInvite factionInvite = new FactionInvite(player, invited, faction);
         FactionInviteMethods.addInvite(factionInvite);
 
-        pendingInvites.put(invited, FactionInviteMethods.getFactionInvites());
+        pendingInvites.put(invited.getUniqueId(), FactionInviteMethods.getFactionInvites());
 
         invited.spigot().sendMessage(factionInvite.getInviteMessage());
 

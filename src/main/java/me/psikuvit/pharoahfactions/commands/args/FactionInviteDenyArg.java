@@ -26,6 +26,10 @@ public class FactionInviteDenyArg extends CommandAbstract {
         Player invited = (Player) sender;
         Player inviter = Bukkit.getPlayer(args[0]);
         p = invited;
+        if (inviter == null) {
+            Messages.sendMessage(invited, "&cCouldn't find this player");
+            return;
+        }
 
         FactionInvite factionInvite = FactionInviteMethods.getInviteByInviter(inviter);
         if (factionInvite == null) { // check if the inviter invited the invited
@@ -38,7 +42,7 @@ public class FactionInviteDenyArg extends CommandAbstract {
         }
 
         PlayerDataInterface playerDataInterface = plugin.getPlayerData();
-        playerDataInterface.getPendingInvites().put(invited, FactionInviteMethods.getFactionInvites()); // setting the invitations again after denying
+        playerDataInterface.getPendingInvites().put(invited.getUniqueId(), FactionInviteMethods.getFactionInvites()); // setting the invitations again after denying
 
         Messages.sendMessage(invited, "&bYou successfully denied the invite from " + invited.getName());
     }

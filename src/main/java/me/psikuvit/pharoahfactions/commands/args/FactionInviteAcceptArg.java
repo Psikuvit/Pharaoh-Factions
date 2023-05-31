@@ -29,6 +29,11 @@ public class FactionInviteAcceptArg extends CommandAbstract {
 
         p = invited;
 
+        if (inviter == null) {
+            Messages.sendMessage(invited, "&cCouldn't find this player");
+            return;
+        }
+
         FactionInvite factionInvite = FactionInviteMethods.getInviteByInviter(inviter);
         if (factionInvite == null) { // check if the inviter invited the invited
             Messages.sendMessage(invited, "&cCouldn't find invite from this player");
@@ -39,7 +44,7 @@ public class FactionInviteAcceptArg extends CommandAbstract {
             Messages.sendMessage(inviter, "&c" + invited.getName() + " accepted your invitation");
         }
         PlayerDataInterface playerDataInterface = plugin.getPlayerData();
-        playerDataInterface.getPendingInvites().put(invited, FactionInviteMethods.getFactionInvites()); // setting the invitations again after denying
+        playerDataInterface.getPendingInvites().put(invited.getUniqueId(), FactionInviteMethods.getFactionInvites()); // setting the invitations again after denying
 
         Faction faction = factionInvite.getFaction();
         addPlayerToFaction(faction, invited);
