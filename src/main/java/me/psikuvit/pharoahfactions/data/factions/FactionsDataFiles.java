@@ -45,30 +45,33 @@ public class FactionsDataFiles implements FactionsDataInterface {
     }
 
     @Override
-    public void saveFactionData(Faction faction) {
-        createFactionData(faction);
-        File file = new File(plugin.getDataFolder(), "Factions/" + faction.getUuid() + ".yml");
-        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
+    public void saveFactionData() {
+        for (Faction faction : FactionMethods.getFactions()) {
+            createFactionData(faction);
+            File file = new File(plugin.getDataFolder(), "Factions/" + faction.getUuid() + ".yml");
+            YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
 
-        String owner = faction.getOwner().getName();
-        String uuid = String.valueOf(faction.getUuid());
-        List<String> members = faction.getMembers().stream().map(Player::getName).collect(Collectors.toList());
-        String name = faction.getName();
-        List<String> description = faction.getDescription();
+            String owner = faction.getOwner().getName();
+            String uuid = String.valueOf(faction.getUuid());
+            List<String> members = faction.getMembers().stream().map(Player::getName).collect(Collectors.toList());
+            String name = faction.getName();
+            List<String> description = faction.getDescription();
 
-        yaml.set("Faction-Name", name);
-        yaml.set("Faction-Owner", owner);
-        yaml.set("Faction-UUID", uuid);
-        yaml.set("Faction-Description", description);
-        yaml.set("Faction-Members", members);
-        yaml.set("Faction-Ranks", faction.getMembersRank());
-        try {
-            yaml.save(file);
-        } catch (IOException e) {
-            e.printStackTrace();
+            yaml.set("Faction-Name", name);
+            yaml.set("Faction-Owner", owner);
+            yaml.set("Faction-UUID", uuid);
+            yaml.set("Faction-Description", description);
+            yaml.set("Faction-Members", members);
+            for (Player player : faction.getMembersRank().keySet()) {
+                String s = player.getName() + ":" + faction.getMembersRank().get(player);
+                yaml.set("Faction-Ranks", s);
+            }
+            try {
+                yaml.save(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-
     }
 
     @Override
@@ -85,9 +88,15 @@ public class FactionsDataFiles implements FactionsDataInterface {
                 Player owner = Bukkit.getPlayer(yaml.getString("Faction-Owner"));
                 UUID uuid = UUID.fromString(yaml.getString("Faction-UUID"));
                 List<String> description = yaml.getStringList("Faction-Description");
-                List<String> members = yaml.getStringList("Faction-Members");
+                List<Player> members = yaml.getStringList("Faction-Members").stream().map(Bukkit::getPlayer).collect(Collectors.toList());
 
-                Faction faction = new Faction(name, members.stream().map(Bukkit::getPlayer).collect(Collectors.toList()), owner, uuid, description);
+                List<String> ranks = yaml.getStringList("Faction-Ranks");
+
+                Faction faction = new Faction(name, members, owner, uuid, description);
+                for (String rank : ranks) {
+                    String[] split = rank.split(":");
+                    faction.getMembersRank().put(Bukkit.getPlayer(split[0]), FactionRanks.valueOf(split[1]));
+                }
                 FactionMethods.addFaction(faction);
             });
 

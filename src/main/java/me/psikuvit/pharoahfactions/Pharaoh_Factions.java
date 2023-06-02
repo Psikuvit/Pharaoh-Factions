@@ -26,6 +26,7 @@ public class Pharaoh_Factions extends JavaPlugin {
         factionsData = new FactionsDataFiles(this);
         playerData = new PlayerDataFiles(this);
 
+
         Objects.requireNonNull(getCommand("factions")).setExecutor(new CommandRegisterer(this));
         Objects.requireNonNull(getCommand("factions")).setTabCompleter(new CommandRegisterer(this));
         getServer().getPluginManager().registerEvents(new InventoryClickEventListener(), this);
@@ -36,6 +37,7 @@ public class Pharaoh_Factions extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         getPlayerData().savePlayerData();
+        getFactionsData().saveFactionData();
     }
 
     public PlayerMenuUtility getPlayerMenuUtility(Player p) {

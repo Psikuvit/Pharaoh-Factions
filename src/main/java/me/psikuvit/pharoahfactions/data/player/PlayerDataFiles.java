@@ -80,8 +80,8 @@ public class PlayerDataFiles implements PlayerDataInterface {
             }
             YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
 
-            yaml.set("Faction", null);
-            yaml.set("Rank-In_Faction", null);
+            yaml.set("Faction", playerFaction.get(player).getUuid());
+            yaml.set("Rank-In_Faction", playerFaction.get(player).getMembersRank().get(player));
 
             try {
                 yaml.save(file);
@@ -98,7 +98,11 @@ public class PlayerDataFiles implements PlayerDataInterface {
         try (Stream<Path> fileStream = Utils.getFilesInFolder(folderPath)) {
             // iterate through the stream and print the file names
             for (Path file : fileStream.collect(Collectors.toList())) {
+                String[] filename = file.toString().split("\\.");
+
+                UUID owner = UUID.fromString(filename[0].split("/")[3]);
                 YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file.toFile());
+
                 String uuid = yaml.getString("Faction");
                 if (uuid == null) {
                     Messages.log("Skipped player with uuid: " + file + ", Because he doesn't have a faction");
@@ -106,7 +110,7 @@ public class PlayerDataFiles implements PlayerDataInterface {
                 }
 
                 Faction faction = FactionMethods.getFactionByUUID(UUID.fromString(uuid));
-                Player player = Bukkit.getPlayer(UUID.fromString(file.toString()));
+                Player player = Bukkit.getPlayer(owner);
                 playerFaction.put(player, faction);
             };
 

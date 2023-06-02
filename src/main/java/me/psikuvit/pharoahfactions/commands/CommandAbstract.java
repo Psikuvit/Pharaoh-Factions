@@ -12,7 +12,6 @@ public abstract class CommandAbstract extends FactionMethods {
         this.plugin = plugin;
     }
 
-
     public abstract void executeCommand(final String[] args, final CommandSender sender);
 
     public abstract String correctArg();

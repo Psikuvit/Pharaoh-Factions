@@ -1,11 +1,13 @@
 package me.psikuvit.pharoahfactions.commands.args;
 
+import me.psikuvit.pharoahfactions.events.FactionCreateEvent;
 import me.psikuvit.pharoahfactions.factions.Faction;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.data.factions.FactionsDataInterface;
 import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
 import me.psikuvit.pharoahfactions.utils.Messages;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -30,14 +32,13 @@ public class FactionCreateArg extends CommandAbstract {
 
         addFaction(faction); // cache the Faction
 
-        FactionsDataInterface factionsData = plugin.getFactionsData();
-        factionsData.saveFactionData(faction);
-
         PlayerDataInterface playerData = plugin.getPlayerData();
         playerData.setPlayerFaction(player, faction);
 
         Messages.sendMessage(player, "&bFaction named: &f" + args[0] + " &bwas created");
 
+        FactionCreateEvent factionCreateEvent = new FactionCreateEvent(faction);
+        Bukkit.getPluginManager().callEvent(factionCreateEvent);
     }
 
     @Override

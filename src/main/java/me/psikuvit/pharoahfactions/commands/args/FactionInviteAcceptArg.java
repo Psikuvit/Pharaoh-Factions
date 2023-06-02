@@ -34,17 +34,19 @@ public class FactionInviteAcceptArg extends CommandAbstract {
             return;
         }
 
-        FactionInvite factionInvite = FactionInviteMethods.getInviteByInviter(inviter);
+        FactionInvite factionInvite = FactionInviteMethods.getInviteByInviter(invited, inviter);
+        List<FactionInvite> pendingInvites = FactionInviteMethods.getFactionInvites(invited);
+
         if (factionInvite == null) { // check if the inviter invited the invited
             Messages.sendMessage(invited, "&cCouldn't find invite from this player");
             return;
         }
-        FactionInviteMethods.removeInvite(factionInvite); // remove the invite from the invitations list
         if (invited.isOnline()) { // check if player is online
             Messages.sendMessage(inviter, "&c" + invited.getName() + " accepted your invitation");
         }
-        PlayerDataInterface playerDataInterface = plugin.getPlayerData();
-        playerDataInterface.getPendingInvites().put(invited.getUniqueId(), FactionInviteMethods.getFactionInvites()); // setting the invitations again after denying
+        pendingInvites.remove(factionInvite);
+        FactionInviteMethods.removeInvite(invited, pendingInvites);
+
 
         Faction faction = factionInvite.getFaction();
         addPlayerToFaction(faction, invited);
@@ -80,8 +82,7 @@ public class FactionInviteAcceptArg extends CommandAbstract {
         switch (args.length) {
             case 0: completions.add("accept");
             case 1 : {
-                PlayerDataInterface playerDataInterface = plugin.getPlayerData();
-                List<FactionInvite> factionInvites = playerDataInterface.getPendingInvites().get(p);
+                List<FactionInvite> factionInvites = FactionInviteMethods.getFactionInvites(p);
                 for (FactionInvite factionInvite : factionInvites) {
                     completions.add(factionInvite.getInviter().getDisplayName());
                 }

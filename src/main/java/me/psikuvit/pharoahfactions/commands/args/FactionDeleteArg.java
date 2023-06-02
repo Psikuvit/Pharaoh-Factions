@@ -28,13 +28,10 @@ public class FactionDeleteArg extends CommandAbstract {
             Messages.sendMessage(player, "&cYou are not the owner of this faction to run this command");
             return;
         }
-        if (!faction.getMembers().isEmpty()) {
-            for (Player player1 : faction.getMembers()) {
-                removePlayerFromFaction(faction, player1);
-            }
-        } else {
-            removeFaction(faction);
+        for (Player member : faction.getMembers()) {
+            removePlayerFromFaction(faction, member);
         }
+        removeFaction(faction);
     }
 
     @Override

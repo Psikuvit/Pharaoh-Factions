@@ -4,6 +4,6 @@ import me.psikuvit.pharoahfactions.factions.Faction;
 
 public interface FactionsDataInterface {
     void createFactionData(Faction faction);
-    void saveFactionData(Faction faction);
+    void saveFactionData();
     void loadFactionData();
 }

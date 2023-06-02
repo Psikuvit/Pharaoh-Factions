@@ -12,7 +12,7 @@ public class FactionInvite {
     private final Player inviter;
     private final Player invited;
     private final Faction faction;
-    private final  BaseComponent[] baseComponent;
+    private final BaseComponent[] baseComponent;
 
     public FactionInvite(Player inviter, Player invited, Faction faction) {
         this.inviter = inviter;

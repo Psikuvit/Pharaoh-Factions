@@ -40,7 +40,7 @@ public class FactionInviteArg extends CommandAbstract {
         }
 
         PlayerDataInterface playerData = plugin.getPlayerData();
-        if (playerData.isInFaction(player)) { // check if player is in a faction
+        if (!playerData.isInFaction(player)) { // check if player is in a faction
             Messages.sendMessage(player, "&cYou are not in a faction");
             return;
         }
@@ -50,28 +50,27 @@ public class FactionInviteArg extends CommandAbstract {
             return;
         }
 
-        HashMap<UUID, List<FactionInvite>> pendingInvites = playerData.getPendingInvites();
+        List<FactionInvite> pendingInvites = FactionInviteMethods.getFactionInvites(invited);
 
         if (!pendingInvites.isEmpty()) {
-            for (List<FactionInvite> invites : pendingInvites.values()) {
-                for (FactionInvite factionInvite : invites) {
-                    if (factionInvite.getFaction().equals(faction)) {
-                        Messages.sendMessage(player, "&cPlayer Already is invited to this faction");
-                        break;
-                    }
+            for (FactionInvite invite : pendingInvites) {
+                if (invite.getFaction().equals(faction)) {
+                    Messages.sendMessage(player, "&cPlayer Already is invited to this faction");
+                    break;
                 }
+
             }
             return;
         }
 
         FactionInvite factionInvite = new FactionInvite(player, invited, faction);
-        FactionInviteMethods.addInvite(factionInvite);
+        pendingInvites.add(factionInvite);
 
-        pendingInvites.put(invited.getUniqueId(), FactionInviteMethods.getFactionInvites());
+        FactionInviteMethods.addPlayerInvite(invited, pendingInvites);
 
         invited.spigot().sendMessage(factionInvite.getInviteMessage());
 
-        FactionInviteMethods.removeInviteTask(factionInvite);
+        FactionInviteMethods.removeInviteTask(invited, factionInvite);
 
         Messages.sendMessage(player, "&3invite sent successfully");
 
