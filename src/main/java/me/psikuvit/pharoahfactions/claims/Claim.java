@@ -7,21 +7,38 @@ import java.util.List;
 import java.util.UUID;
 
 public class Claim {
+
+    private final String name;
     private final List<Chunk> chunks;
-    private final Location claimLoc;
+    private Location spawnLoc;
     private final List<UUID> members;
 
-    public Claim(List<Chunk> chunks, Location claimLoc, List<UUID> members) {
+    public Claim(String name, List<Chunk> chunks, Location spawnLoc, List<UUID> members) {
+        this.name = name;
         this.chunks = chunks;
-        this.claimLoc = claimLoc;
+        this.spawnLoc = spawnLoc;
         this.members = members;
     }
+
+    public String getName() {
+        return name;
+    }
+
     public List<Chunk> getChunks() {
         return chunks;
     }
 
-    public Location getClaimLoc() {
-        return claimLoc;
+    public Location getSpawnLoc() {
+        return spawnLoc;
+    }
+
+    public void setSpawnLoc(Location spawnLoc) {
+        this.spawnLoc = spawnLoc;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 
     public List<UUID> getMembers() {

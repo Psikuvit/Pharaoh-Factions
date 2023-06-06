@@ -5,48 +5,51 @@ import me.psikuvit.pharoahfactions.claims.Claim;
 import me.psikuvit.pharoahfactions.claims.ClaimUtils;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.utils.Messages;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class ClaimArg extends CommandAbstract {
+public class AddMemberArg extends CommandAbstract {
 
-    public ClaimArg(Pharaoh_Factions plugin) {
+    public AddMemberArg(Pharaoh_Factions plugin) {
         super(plugin);
     }
 
     @Override
     public void executeCommand(String[] args, CommandSender sender) {
         Player p = (Player) sender;
-        Chunk chunk = p.getLocation().getChunk();
 
-        if (ClaimUtils.isChunkTaken(chunk)) {
-            Messages.sendMessage(p, "&cChunk already taken.");
+        Player member = Bukkit.getPlayer(args[0]);
+
+        if (member == null) {
+            Messages.sendMessage(p, "&cCouldn't find player");
             return;
         }
+
+        if (p.equals(member)) {
+            Messages.sendMessage(p, "&cYou can't invite yourself");
+            return;
+        }
+
         if (ClaimUtils.hasClaim(p.getUniqueId())) {
-            Messages.sendMessage(p, "&cYou already have a claim.");
+            Messages.sendMessage(p, "&cYou don't have a claim to invite people");
             return;
         }
-        List<Chunk> chunks = new ArrayList<>();
-        chunks.add(chunk);
-        Location loc = p.getLocation();
 
-        Claim claim = new Claim(args[0], chunks, loc, Collections.emptyList());
-        ClaimUtils.addClaim(p, claim);
+        Claim claim = ClaimUtils.getPlayerClaim(p);
 
-        Messages.sendMessage(p, "&bClaimed this chunk.");
+        List<UUID> uuids = claim.getMembers();
+        uuids.add(member.getUniqueId());
+
+        Messages.sendMessage(p, "&e" + member.getName() + " &b was added to the claim!.");
     }
 
     @Override
     public String correctArg() {
-        return "/claim claim";
+        return "/claim addmember <player>";
     }
 
     @Override

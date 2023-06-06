@@ -2,7 +2,10 @@ package me.psikuvit.pharoahfactions.commands.claims;
 
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
+import me.psikuvit.pharoahfactions.commands.claims.args.AddMemberArg;
 import me.psikuvit.pharoahfactions.commands.claims.args.ClaimArg;
+import me.psikuvit.pharoahfactions.commands.claims.args.ClaimTPArg;
+import me.psikuvit.pharoahfactions.commands.claims.args.SpawnLocArg;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -22,6 +25,9 @@ public class ClaimCommandRegisterer implements CommandExecutor, TabCompleter {
     public ClaimCommandRegisterer(final Pharaoh_Factions plugin) {
         commandAbstractMap = new HashMap<>();
         commandAbstractMap.put("claim", new ClaimArg(plugin));
+        commandAbstractMap.put("tp", new ClaimTPArg(plugin));
+        commandAbstractMap.put("addmember", new AddMemberArg(plugin));
+        commandAbstractMap.put("setspawnpoint", new SpawnLocArg(plugin));
 
 
     }
