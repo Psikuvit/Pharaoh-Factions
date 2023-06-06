@@ -1,4 +1,4 @@
-package me.psikuvit.pharoahfactions.commands.args;
+package me.psikuvit.pharoahfactions.commands.factions.args;
 
 import me.psikuvit.pharoahfactions.factions.Faction;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
@@ -13,9 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class FactionInviteArg extends CommandAbstract {
 
@@ -63,10 +61,9 @@ public class FactionInviteArg extends CommandAbstract {
             return;
         }
 
-        FactionInvite factionInvite = new FactionInvite(player, invited, faction);
-        pendingInvites.add(factionInvite);
+        FactionInvite factionInvite = new FactionInvite(player, faction);
 
-        FactionInviteMethods.addPlayerInvite(invited, pendingInvites);
+        FactionInviteMethods.addPlayerInvite(invited, factionInvite);
 
         invited.spigot().sendMessage(factionInvite.getInviteMessage());
 

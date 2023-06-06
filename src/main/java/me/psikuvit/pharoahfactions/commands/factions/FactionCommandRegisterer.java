@@ -1,13 +1,13 @@
-package me.psikuvit.pharoahfactions.commands;
+package me.psikuvit.pharoahfactions.commands.factions;
 
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
-import me.psikuvit.pharoahfactions.commands.args.*;
+import me.psikuvit.pharoahfactions.commands.CommandAbstract;
+import me.psikuvit.pharoahfactions.commands.factions.args.*;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.craftbukkit.libs.org.eclipse.sisu.Nullable;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,11 +16,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CommandRegisterer implements CommandExecutor, TabCompleter {
+public class FactionCommandRegisterer implements CommandExecutor, TabCompleter {
     private final Map<String, CommandAbstract> commandAbstractMap;
 
-    public CommandRegisterer(final Pharaoh_Factions plugin) {
-        this.commandAbstractMap = new HashMap<>();
+    public FactionCommandRegisterer(final Pharaoh_Factions plugin) {
+        commandAbstractMap = new HashMap<>();
         commandAbstractMap.put("create", new FactionCreateArg(plugin));
         commandAbstractMap.put("gui", new FactionsGUIArg(plugin));
         commandAbstractMap.put("invite", new FactionInviteArg(plugin));

@@ -1,9 +1,8 @@
-package me.psikuvit.pharoahfactions.commands.args;
+package me.psikuvit.pharoahfactions.commands.factions.args;
 
 import me.psikuvit.pharoahfactions.factions.Faction;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
-import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
 import me.psikuvit.pharoahfactions.factions.FactionInvite;
 import me.psikuvit.pharoahfactions.factions.utils.FactionInviteMethods;
 import me.psikuvit.pharoahfactions.utils.Messages;
@@ -35,7 +34,6 @@ public class FactionInviteAcceptArg extends CommandAbstract {
         }
 
         FactionInvite factionInvite = FactionInviteMethods.getInviteByInviter(invited, inviter);
-        List<FactionInvite> pendingInvites = FactionInviteMethods.getFactionInvites(invited);
 
         if (factionInvite == null) { // check if the inviter invited the invited
             Messages.sendMessage(invited, "&cCouldn't find invite from this player");
@@ -44,8 +42,7 @@ public class FactionInviteAcceptArg extends CommandAbstract {
         if (invited.isOnline()) { // check if player is online
             Messages.sendMessage(inviter, "&c" + invited.getName() + " accepted your invitation");
         }
-        pendingInvites.remove(factionInvite);
-        FactionInviteMethods.removeInvite(invited, pendingInvites);
+        FactionInviteMethods.removeInvite(invited, factionInvite);
 
 
         Faction faction = factionInvite.getFaction();

@@ -34,7 +34,7 @@ public class Messages {
         }
         return ChatColor.translateAlternateColorCodes('&', message);
     }
-    public static void log(String message) {
-        Bukkit.getLogger().info(message);
+    public static void log(Object o) {
+        Bukkit.getLogger().info("[Pharaoh-factions] " + o);
     }
 }

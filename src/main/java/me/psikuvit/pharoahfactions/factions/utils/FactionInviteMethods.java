@@ -31,25 +31,29 @@ public class FactionInviteMethods {
      * This method is used to cache player invites
      *
      * @param invited to save invites for
-     * @param invites to cache
+     * @param invite to cache
      */
-    public static void addPlayerInvite(Player invited, List<FactionInvite> invites) {
-        factionInvites.put(invited.getUniqueId(), invites);
+    public static void addPlayerInvite(Player invited, FactionInvite invite) {
+        List<FactionInvite> x = factionInvites.get(invited.getUniqueId());
+        x.add(invite);
+        factionInvites.put(invited.getUniqueId(), x);
     }
 
     /**
      * This method is used to cache player invites
      *
      * @param invited to delete invites for
-     * @param invites to delete
+     * @param invite to delete
      */
-    public static void removeInvite(Player invited, List<FactionInvite> invites) {
-        factionInvites.remove(invited.getUniqueId(), invites);
+    public static void removeInvite(Player invited, FactionInvite invite) {
+        List<FactionInvite> x = factionInvites.get(invited.getUniqueId());
+        x.remove(invite);
+        factionInvites.put(invited.getUniqueId(), x);
     }
 
     public static FactionInvite getInviteByInviter(Player invited, Player inviter) {
         for (FactionInvite factionInvite : factionInvites.get(invited.getUniqueId())) {
-            if (factionInvite.getInviter().equals(inviter) && factionInvite.getInvited().equals(invited)) {
+            if (factionInvite.getInviter().equals(inviter)) {
                 return factionInvite;
             }
         }

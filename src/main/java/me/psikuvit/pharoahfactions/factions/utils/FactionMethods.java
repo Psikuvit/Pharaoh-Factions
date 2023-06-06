@@ -34,6 +34,8 @@ public class FactionMethods {
      * @param faction faction to delete
      */
     public static void removeFaction(Faction faction) {
+        PlayerDataInterface playerDataFiles = Pharaoh_Factions.getPlugin(Pharaoh_Factions.class).getPlayerData();
+        faction.getMembers().forEach(playerDataFiles::removePlayerFaction);
         factions.remove(faction);
     }
 
@@ -47,18 +49,6 @@ public class FactionMethods {
         PlayerDataInterface playerDataFiles = Pharaoh_Factions.getPlugin(Pharaoh_Factions.class).getPlayerData();
         playerDataFiles.setPlayerFaction(player, faction);
     }
-
-    /**
-     * This method is used to remove a Player from the Faction
-     * @param faction faction to remove player from it
-     * @param player player to remove
-     */
-    public static void removePlayerFromFaction(Faction faction, Player player) {
-        faction.getMembers().remove(player);
-        PlayerDataInterface playerDataFiles = Pharaoh_Factions.getPlugin(Pharaoh_Factions.class).getPlayerData();
-        playerDataFiles.removePlayerFaction(player);
-    }
-
 
     /**
      * This method is used to get the Faction from its uuid

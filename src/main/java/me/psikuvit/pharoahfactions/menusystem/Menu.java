@@ -13,6 +13,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /*
@@ -77,7 +80,7 @@ public abstract class Menu implements InventoryHolder {
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.setDisplayName(Messages.color(displayName));
 
-        itemMeta.setLore(Messages.color(List.of(lore)));
+        itemMeta.setLore(Messages.color(Arrays.asList(lore)));
         item.setItemMeta(itemMeta);
 
         return item;
@@ -86,7 +89,7 @@ public abstract class Menu implements InventoryHolder {
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(Messages.color(displayName));
 
-        itemMeta.setLore(Messages.color(List.of(lore)));
+        itemMeta.setLore(Messages.color(Arrays.asList(lore)));
         itemStack.setItemMeta(itemMeta);
 
         return itemStack;

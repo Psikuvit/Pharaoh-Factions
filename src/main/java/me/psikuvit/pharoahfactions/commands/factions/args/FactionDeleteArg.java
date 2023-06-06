@@ -1,4 +1,4 @@
-package me.psikuvit.pharoahfactions.commands.args;
+package me.psikuvit.pharoahfactions.commands.factions.args;
 
 import me.psikuvit.pharoahfactions.factions.Faction;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
@@ -19,7 +19,7 @@ public class FactionDeleteArg extends CommandAbstract {
     @Override
     public void executeCommand(String[] args, CommandSender sender) {
         Player player = (Player) sender;
-        if (plugin.getPlayerData().isInFaction(player)) {
+        if (!plugin.getPlayerData().isInFaction(player)) {
             Messages.sendMessage(player, "&cYou are not in a faction");
             return;
         }
@@ -28,15 +28,13 @@ public class FactionDeleteArg extends CommandAbstract {
             Messages.sendMessage(player, "&cYou are not the owner of this faction to run this command");
             return;
         }
-        for (Player member : faction.getMembers()) {
-            removePlayerFromFaction(faction, member);
-        }
+        Messages.sendMessage(player, "&bFaction was deleted");
         removeFaction(faction);
     }
 
     @Override
     public String correctArg() {
-        return "/factions delete <faction_name>";
+        return "/factions delete";
     }
 
     @Override
@@ -46,7 +44,7 @@ public class FactionDeleteArg extends CommandAbstract {
 
     @Override
     public int requiredArg() {
-        return 1;
+        return 0;
     }
 
     @Override

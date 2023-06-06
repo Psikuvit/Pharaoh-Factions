@@ -10,9 +10,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -60,7 +63,7 @@ public class PlayerDataFiles implements PlayerDataInterface {
 
     @Override
     public boolean isInFaction(Player player) {
-        return getPlayerFaction(player) == null;
+        return playerFaction.containsKey(player);
     }
 
     @Override
@@ -78,10 +81,17 @@ public class PlayerDataFiles implements PlayerDataInterface {
                     e.printStackTrace();
                 }
             }
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                writer.write("");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
+            Faction faction = playerFaction.get(player);
 
-            yaml.set("Faction", playerFaction.get(player).getUuid());
-            yaml.set("Rank-In_Faction", playerFaction.get(player).getMembersRank().get(player));
+            yaml.set("Faction", faction.getUuid().toString());
+            yaml.set("Rank-In_Faction",faction.getMembersRank().get(player).toString());
 
             try {
                 yaml.save(file);
@@ -93,11 +103,20 @@ public class PlayerDataFiles implements PlayerDataInterface {
     @Override
     public void loadFactionData() {
         String folderPath = plugin.getDataFolder().getPath() + "/Players-Data";
+        Path folder = Paths.get(folderPath);
+        if (!folder.toFile().exists()) {
+            return;
+        }
 
         // get a stream of all files in the folder
         try (Stream<Path> fileStream = Utils.getFilesInFolder(folderPath)) {
             // iterate through the stream and print the file names
             for (Path file : fileStream.collect(Collectors.toList())) {
+
+                if (file.toFile().length() == 0) {
+                    Messages.log("File is empty");
+                    return;
+                }
                 String[] filename = file.toString().split("\\.");
 
                 UUID owner = UUID.fromString(filename[0].split("/")[3]);

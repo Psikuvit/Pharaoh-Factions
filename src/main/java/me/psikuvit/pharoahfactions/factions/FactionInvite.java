@@ -10,13 +10,11 @@ import org.bukkit.entity.Player;
 public class FactionInvite {
 
     private final Player inviter;
-    private final Player invited;
     private final Faction faction;
     private final BaseComponent[] baseComponent;
 
-    public FactionInvite(Player inviter, Player invited, Faction faction) {
+    public FactionInvite(Player inviter, Faction faction) {
         this.inviter = inviter;
-        this.invited = invited;
         this.faction = faction;
 
         baseComponent = new ComponentBuilder("You have been invited to join a faction by ")
@@ -43,10 +41,6 @@ public class FactionInvite {
 
     public Faction getFaction() {
         return faction;
-    }
-
-    public Player getInvited() {
-        return invited;
     }
 
     public Player getInviter() {

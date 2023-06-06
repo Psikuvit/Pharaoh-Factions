@@ -4,6 +4,7 @@ import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.factions.Faction;
 import me.psikuvit.pharoahfactions.factions.utils.FactionMethods;
 import me.psikuvit.pharoahfactions.factions.utils.FactionRanks;
+import me.psikuvit.pharoahfactions.utils.Messages;
 import me.psikuvit.pharoahfactions.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -62,10 +64,12 @@ public class FactionsDataFiles implements FactionsDataInterface {
             yaml.set("Faction-UUID", uuid);
             yaml.set("Faction-Description", description);
             yaml.set("Faction-Members", members);
+            List<String> ranks = new ArrayList<>();
             for (Player player : faction.getMembersRank().keySet()) {
                 String s = player.getName() + ":" + faction.getMembersRank().get(player);
-                yaml.set("Faction-Ranks", s);
+                ranks.add(s);
             }
+            yaml.set("Faction-Ranks", ranks);
             try {
                 yaml.save(file);
             } catch (IOException e) {
@@ -77,12 +81,20 @@ public class FactionsDataFiles implements FactionsDataInterface {
     @Override
     public void loadFactionData() {
         String folderPath = plugin.getDataFolder().getPath() + "/Factions";
+        Path folder = Paths.get(folderPath);
+        if (!folder.toFile().exists()) {
+            return;
+        }
 
         // get a stream of all files in the folder
         try (Stream<Path> fileStream = Utils.getFilesInFolder(folderPath)) {
             // iterate through the stream and print the file names
             fileStream.forEach(file -> {
                 YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file.toFile());
+                if (file.toFile().length() == 0) {
+                    Messages.log("File is empty");
+                    return;
+                }
 
                 String name = yaml.getString("Faction-Name");
                 Player owner = Bukkit.getPlayer(yaml.getString("Faction-Owner"));

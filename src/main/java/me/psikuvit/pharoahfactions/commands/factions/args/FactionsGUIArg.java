@@ -1,4 +1,4 @@
-package me.psikuvit.pharoahfactions.commands.args;
+package me.psikuvit.pharoahfactions.commands.factions.args;
 
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;

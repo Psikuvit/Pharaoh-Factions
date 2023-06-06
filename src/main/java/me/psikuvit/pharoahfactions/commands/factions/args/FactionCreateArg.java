@@ -1,20 +1,16 @@
-package me.psikuvit.pharoahfactions.commands.args;
+package me.psikuvit.pharoahfactions.commands.factions.args;
 
 import me.psikuvit.pharoahfactions.events.FactionCreateEvent;
 import me.psikuvit.pharoahfactions.factions.Faction;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
-import me.psikuvit.pharoahfactions.data.factions.FactionsDataInterface;
 import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class FactionCreateArg extends CommandAbstract {
 
@@ -25,14 +21,18 @@ public class FactionCreateArg extends CommandAbstract {
     @Override
     public void executeCommand(String[] args, CommandSender sender) {
         Player player = (Player) sender;
+        PlayerDataInterface playerData = plugin.getPlayerData();
+        if (playerData.isInFaction(player)) {
+            Messages.sendMessage(player, "&cYou already have a faction");
+            return;
+        }
 
         String description = String.join(" ", Arrays.copyOfRange(args, 1, args.length)); // gets infinite args above 1 to get the description
 
-        Faction faction = new Faction(args[0], List.of(player), player, UUID.randomUUID(), List.of(description)); // creates the Faction
+        Faction faction = new Faction(args[0], Collections.singletonList(player), player, UUID.randomUUID(), Collections.singletonList(description)); // creates the Faction
 
         addFaction(faction); // cache the Faction
 
-        PlayerDataInterface playerData = plugin.getPlayerData();
         playerData.setPlayerFaction(player, faction);
 
         Messages.sendMessage(player, "&bFaction named: &f" + args[0] + " &bwas created");
