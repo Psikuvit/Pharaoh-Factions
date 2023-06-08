@@ -3,6 +3,7 @@ package me.psikuvit.pharoahfactions.commands.factions.args;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.factions.utils.FactionInviteMethods;
+import me.psikuvit.pharoahfactions.factions.utils.FactionMethods;
 import me.psikuvit.pharoahfactions.menusystem.menu.PlayerPendingInvitesGUI;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.command.CommandSender;
@@ -13,6 +14,8 @@ import java.util.List;
 
 public class PendingInvitesArg extends CommandAbstract {
 
+    private final FactionInviteMethods factionInviteMethods = FactionInviteMethods.getInstance();
+
     public PendingInvitesArg(Pharaoh_Factions plugin) {
         super(plugin);
     }
@@ -20,7 +23,7 @@ public class PendingInvitesArg extends CommandAbstract {
     @Override
     public void executeCommand(String[] args, CommandSender sender) {
         Player p = (Player) sender;
-        if (FactionInviteMethods.getFactionInvites(p) == null) {
+        if (factionInviteMethods.getFactionInvites(p) == null) {
             Messages.sendMessage(p, "&cYou have no pending invites");
             return;
         }

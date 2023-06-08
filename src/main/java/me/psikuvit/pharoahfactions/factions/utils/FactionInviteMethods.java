@@ -1,6 +1,7 @@
 package me.psikuvit.pharoahfactions.factions.utils;
 
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
+import me.psikuvit.pharoahfactions.claims.ClaimUtils;
 import me.psikuvit.pharoahfactions.factions.FactionInvite;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -12,18 +13,30 @@ import java.util.UUID;
 
 public class FactionInviteMethods {
 
-    private static final HashMap<UUID, List<FactionInvite>> factionInvites = new HashMap<>();
+    private final HashMap<UUID, List<FactionInvite>> factionInvites;
+    private static FactionInviteMethods INSTANCE;
+
+    private FactionInviteMethods(){
+        this.factionInvites = new HashMap<>();
+    }
+
+    public static FactionInviteMethods getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new FactionInviteMethods();
+        }
+        return INSTANCE;
+    }
 
     /**
      * This method is used to get all pending invites
      *
      * @return pending invites
      */
-    public static List<FactionInvite> getFactionInvites(Player player) {
+    public List<FactionInvite> getFactionInvites(Player player) {
         return factionInvites.get(player.getUniqueId());
     }
 
-    public static List<FactionInvite> getFactionInvites(UUID uuid) {
+    public List<FactionInvite> getFactionInvites(UUID uuid) {
         return factionInvites.get(uuid);
     }
 
@@ -33,7 +46,7 @@ public class FactionInviteMethods {
      * @param invited to save invites for
      * @param invite to cache
      */
-    public static void addPlayerInvite(Player invited, FactionInvite invite) {
+    public void addPlayerInvite(Player invited, FactionInvite invite) {
         List<FactionInvite> x = factionInvites.get(invited.getUniqueId());
         x.add(invite);
         factionInvites.put(invited.getUniqueId(), x);
@@ -45,13 +58,13 @@ public class FactionInviteMethods {
      * @param invited to delete invites for
      * @param invite to delete
      */
-    public static void removeInvite(Player invited, FactionInvite invite) {
+    public void removeInvite(Player invited, FactionInvite invite) {
         List<FactionInvite> x = factionInvites.get(invited.getUniqueId());
         x.remove(invite);
         factionInvites.put(invited.getUniqueId(), x);
     }
 
-    public static FactionInvite getInviteByInviter(Player invited, Player inviter) {
+    public FactionInvite getInviteByInviter(Player invited, Player inviter) {
         for (FactionInvite factionInvite : factionInvites.get(invited.getUniqueId())) {
             if (factionInvite.getInviter().equals(inviter)) {
                 return factionInvite;
@@ -60,7 +73,7 @@ public class FactionInviteMethods {
         return null;
     }
 
-    public static void removeInviteTask(Player player, FactionInvite factionInvite) {
+    public void removeInviteTask(Player player, FactionInvite factionInvite) {
         new BukkitRunnable() {
             int time = 0;
 

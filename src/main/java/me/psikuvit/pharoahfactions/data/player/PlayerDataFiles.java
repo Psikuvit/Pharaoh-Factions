@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 
 public class PlayerDataFiles implements PlayerDataInterface {
 
+    private final FactionMethods factionMethods = FactionMethods.getInstance();
     private final Pharaoh_Factions plugin;
     private final HashMap<Player, Faction> playerFaction = new HashMap<>();
     public PlayerDataFiles(final Pharaoh_Factions plugin) {
@@ -128,7 +129,7 @@ public class PlayerDataFiles implements PlayerDataInterface {
                     continue;
                 }
 
-                Faction faction = FactionMethods.getFactionByUUID(UUID.fromString(uuid));
+                Faction faction = factionMethods.getFactionByUUID(UUID.fromString(uuid));
                 Player player = Bukkit.getPlayer(owner);
                 playerFaction.put(player, faction);
             };

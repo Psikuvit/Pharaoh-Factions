@@ -6,18 +6,32 @@ import me.psikuvit.pharoahfactions.factions.Faction;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 public class FactionMethods {
 
-    private static final List<Faction> factions = new ArrayList<>();
+    private final List<Faction> factions;
+
+    private static FactionMethods INSTANCE;
+
+    private FactionMethods(){
+        this.factions = new ArrayList<>();
+    }
+
+    public static FactionMethods getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new FactionMethods();
+        }
+        return INSTANCE;
+    }
 
     /**
      * This method is used to get all cached Factions
      * @return all cached Factions
      */
-    public static List<Faction> getFactions() {
+    public List<Faction> getFactions() {
         return factions;
     }
 
@@ -25,7 +39,7 @@ public class FactionMethods {
      * This method is used to cache the Faction
      * @param faction faction to cache
      */
-    public static void addFaction(Faction faction) {
+    public void addFaction(Faction faction) {
         factions.add(faction);
     }
 
@@ -33,7 +47,7 @@ public class FactionMethods {
      * This method is used to delete the Faction
      * @param faction faction to delete
      */
-    public static void removeFaction(Faction faction) {
+    public void removeFaction(Faction faction) {
         PlayerDataInterface playerDataFiles = Pharaoh_Factions.getPlugin(Pharaoh_Factions.class).getPlayerData();
         faction.getMembers().forEach(playerDataFiles::removePlayerFaction);
         factions.remove(faction);
@@ -44,7 +58,7 @@ public class FactionMethods {
      * @param faction faction to add player from it
      * @param player player to add
      */
-    public static void addPlayerToFaction(Faction faction, Player player) {
+    public void addPlayerToFaction(Faction faction, Player player) {
         faction.getMembers().add(player);
         PlayerDataInterface playerDataFiles = Pharaoh_Factions.getPlugin(Pharaoh_Factions.class).getPlayerData();
         playerDataFiles.setPlayerFaction(player, faction);
@@ -55,7 +69,7 @@ public class FactionMethods {
      * @param uuid uuid of the faction
      * @return the faction
      */
-    public static Faction getFactionByUUID(UUID uuid) {
+    public Faction getFactionByUUID(UUID uuid) {
         for (Faction faction : factions) {
             if (faction.getUuid().equals(uuid))
                 return faction;
@@ -68,7 +82,7 @@ public class FactionMethods {
      * @param owner owner of the faction
      * @return the faction
      */
-    public static Faction getFactionByOwner(Player owner) {
+    public Faction getFactionByOwner(Player owner) {
         for (Faction faction : factions) {
             if (faction.getOwner().equals(owner))
                 return faction;

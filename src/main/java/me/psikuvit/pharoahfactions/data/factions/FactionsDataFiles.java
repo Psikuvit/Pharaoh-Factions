@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 
 public class FactionsDataFiles implements FactionsDataInterface {
 
+    private final FactionMethods factionMethods = FactionMethods.getInstance();
     private final Pharaoh_Factions plugin;
     public FactionsDataFiles(Pharaoh_Factions plugin) {
         this.plugin = plugin;
@@ -48,7 +49,7 @@ public class FactionsDataFiles implements FactionsDataInterface {
 
     @Override
     public void saveFactionData() {
-        for (Faction faction : FactionMethods.getFactions()) {
+        for (Faction faction : factionMethods.getFactions()) {
             createFactionData(faction);
             File file = new File(plugin.getDataFolder(), "Factions/" + faction.getUuid() + ".yml");
             YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
@@ -109,7 +110,7 @@ public class FactionsDataFiles implements FactionsDataInterface {
                     String[] split = rank.split(":");
                     faction.getMembersRank().put(Bukkit.getPlayer(split[0]), FactionRanks.valueOf(split[1]));
                 }
-                FactionMethods.addFaction(faction);
+                factionMethods.addFaction(faction);
             });
 
         } catch (Exception e) {

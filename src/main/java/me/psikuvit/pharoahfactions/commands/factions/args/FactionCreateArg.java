@@ -5,6 +5,7 @@ import me.psikuvit.pharoahfactions.factions.Faction;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
+import me.psikuvit.pharoahfactions.factions.utils.FactionMethods;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -13,6 +14,8 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 public class FactionCreateArg extends CommandAbstract {
+
+    private final FactionMethods factionMethods = FactionMethods.getInstance();
 
     public FactionCreateArg(Pharaoh_Factions plugin) {
         super(plugin);
@@ -31,7 +34,7 @@ public class FactionCreateArg extends CommandAbstract {
 
         Faction faction = new Faction(args[0], Collections.singletonList(player), player, UUID.randomUUID(), Collections.singletonList(description)); // creates the Faction
 
-        addFaction(faction); // cache the Faction
+        factionMethods.addFaction(faction); // cache the Faction
 
         playerData.setPlayerFaction(player, faction);
 

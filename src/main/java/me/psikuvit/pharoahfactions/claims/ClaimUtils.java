@@ -1,15 +1,27 @@
 package me.psikuvit.pharoahfactions.claims;
 
-import me.psikuvit.pharoahfactions.factions.FactionInvite;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class ClaimUtils {
 
-    private static final HashMap<UUID, Claim> playerClaims = new HashMap<>();
+    private final HashMap<UUID, Claim> playerClaims;
+
+    private static ClaimUtils INSTANCE;
+
+    private ClaimUtils(){
+        this.playerClaims = new HashMap<>();
+    }
+
+    public static ClaimUtils getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new ClaimUtils();
+        }
+        return INSTANCE;
+    }
 
     /**
      * This method is used to get all pending invites
@@ -18,7 +30,7 @@ public class ClaimUtils {
      * @return pending invites
      */
 
-    public static Claim getPlayerClaim(UUID uuid) {
+    public Claim getPlayerClaim(UUID uuid) {
         return playerClaims.getOrDefault(uuid, null);
     }
 
@@ -28,7 +40,7 @@ public class ClaimUtils {
      * @param player to get claims
      * @return pending invites
      */
-    public static Claim getPlayerClaim(Player player) {
+    public Claim getPlayerClaim(Player player) {
         return getPlayerClaim(player.getUniqueId());
     }
 
@@ -38,7 +50,7 @@ public class ClaimUtils {
      * @param owner to save claims for
      * @param claim to cache
      */
-    public static void addClaim(Player owner, Claim claim) {
+    public void addClaim(Player owner, Claim claim) {
         playerClaims.put(owner.getUniqueId(), claim);
     }
 
@@ -48,11 +60,11 @@ public class ClaimUtils {
      * @param owner to delete invites for
      * @param claim to delete
      */
-    public static void removeClaim(Player owner, Claim claim) {
+    public void removeClaim(Player owner, Claim claim) {
         playerClaims.remove(owner.getUniqueId(), claim);
     }
 
-    public static boolean isChunkTaken(Chunk chunk) {
+    public boolean isChunkTaken(Chunk chunk) {
         for (UUID uuid : playerClaims.keySet()) {
             Claim claim = playerClaims.get(uuid);
             return claim.getChunks().contains(chunk);
@@ -60,7 +72,7 @@ public class ClaimUtils {
         }
         return false;
     }
-    public static Claim getClaimByChunk(Chunk chunk) {
+    public Claim getClaimByChunk(Chunk chunk) {
         for (UUID uuid : playerClaims.keySet()) {
             Claim claim = playerClaims.get(uuid);
             if (claim.getChunks().contains(chunk)) {
@@ -69,7 +81,7 @@ public class ClaimUtils {
         }
         return null;
     }
-    public static UUID getClaimOwner(Claim claim) {
+    public UUID getClaimOwner(Claim claim) {
         for (UUID uuid : playerClaims.keySet()) {
             if (playerClaims.get(uuid) == claim) {
                 return uuid;
@@ -77,7 +89,7 @@ public class ClaimUtils {
         }
         return null;
     }
-    public static boolean hasClaim(UUID uuid) {
+    public boolean hasClaim(UUID uuid) {
         return playerClaims.containsKey(uuid);
     }
 }

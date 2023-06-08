@@ -5,6 +5,7 @@ import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.factions.FactionInvite;
 import me.psikuvit.pharoahfactions.factions.utils.FactionInviteMethods;
+import me.psikuvit.pharoahfactions.factions.utils.FactionMethods;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -16,6 +17,8 @@ import java.util.List;
 public class FactionInviteAcceptArg extends CommandAbstract {
 
     private Player p;
+    private final FactionInviteMethods factionInviteMethods = FactionInviteMethods.getInstance();
+    private final FactionMethods factionMethods = FactionMethods.getInstance();
 
     public FactionInviteAcceptArg(Pharaoh_Factions plugin) {
         super(plugin);
@@ -33,7 +36,7 @@ public class FactionInviteAcceptArg extends CommandAbstract {
             return;
         }
 
-        FactionInvite factionInvite = FactionInviteMethods.getInviteByInviter(invited, inviter);
+        FactionInvite factionInvite = factionInviteMethods.getInviteByInviter(invited, inviter);
 
         if (factionInvite == null) { // check if the inviter invited the invited
             Messages.sendMessage(invited, "&cCouldn't find invite from this player");
@@ -42,11 +45,11 @@ public class FactionInviteAcceptArg extends CommandAbstract {
         if (invited.isOnline()) { // check if player is online
             Messages.sendMessage(inviter, "&c" + invited.getName() + " accepted your invitation");
         }
-        FactionInviteMethods.removeInvite(invited, factionInvite);
+        factionInviteMethods.removeInvite(invited, factionInvite);
 
 
         Faction faction = factionInvite.getFaction();
-        addPlayerToFaction(faction, invited);
+        factionMethods.addPlayerToFaction(faction, invited);
 
         Messages.sendMessage(invited, "&bYou successfully joined the " + faction.getName() + " faction");
     }
@@ -79,7 +82,7 @@ public class FactionInviteAcceptArg extends CommandAbstract {
         switch (args.length) {
             case 0: completions.add("accept");
             case 1 : {
-                List<FactionInvite> factionInvites = FactionInviteMethods.getFactionInvites(p);
+                List<FactionInvite> factionInvites = factionInviteMethods.getFactionInvites(p);
                 for (FactionInvite factionInvite : factionInvites) {
                     completions.add(factionInvite.getInviter().getDisplayName());
                 }

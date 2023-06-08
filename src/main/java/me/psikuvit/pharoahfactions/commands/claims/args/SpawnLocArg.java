@@ -15,6 +15,8 @@ import java.util.UUID;
 
 public class SpawnLocArg extends CommandAbstract {
 
+    private final ClaimUtils claimUtils = ClaimUtils.getInstance();
+
     public SpawnLocArg(Pharaoh_Factions plugin) {
         super(plugin);
     }
@@ -23,12 +25,12 @@ public class SpawnLocArg extends CommandAbstract {
     public void executeCommand(String[] args, CommandSender sender) {
         Player p = (Player) sender;
 
-        if (ClaimUtils.hasClaim(p.getUniqueId())) {
+        if (claimUtils.hasClaim(p.getUniqueId())) {
             Messages.sendMessage(p, "&cYou don't have a claim to invite people");
             return;
         }
 
-        Claim claim = ClaimUtils.getPlayerClaim(p);
+        Claim claim = claimUtils.getPlayerClaim(p);
         Location loc = p.getLocation();
         claim.setSpawnLoc(loc);
 

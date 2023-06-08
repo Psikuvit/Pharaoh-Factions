@@ -6,6 +6,7 @@ import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.data.player.PlayerDataInterface;
 import me.psikuvit.pharoahfactions.factions.FactionInvite;
 import me.psikuvit.pharoahfactions.factions.utils.FactionInviteMethods;
+import me.psikuvit.pharoahfactions.factions.utils.FactionMethods;
 import me.psikuvit.pharoahfactions.factions.utils.FactionRanks;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.Bukkit;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FactionInviteArg extends CommandAbstract {
+
+    private final FactionInviteMethods factionInviteMethods = FactionInviteMethods.getInstance();
 
     public FactionInviteArg(Pharaoh_Factions plugin) {
         super(plugin);
@@ -48,7 +51,7 @@ public class FactionInviteArg extends CommandAbstract {
             return;
         }
 
-        List<FactionInvite> pendingInvites = FactionInviteMethods.getFactionInvites(invited);
+        List<FactionInvite> pendingInvites = factionInviteMethods.getFactionInvites(invited);
 
         if (!pendingInvites.isEmpty()) {
             for (FactionInvite invite : pendingInvites) {
@@ -63,11 +66,11 @@ public class FactionInviteArg extends CommandAbstract {
 
         FactionInvite factionInvite = new FactionInvite(player, faction);
 
-        FactionInviteMethods.addPlayerInvite(invited, factionInvite);
+        factionInviteMethods.addPlayerInvite(invited, factionInvite);
 
         invited.spigot().sendMessage(factionInvite.getInviteMessage());
 
-        FactionInviteMethods.removeInviteTask(invited, factionInvite);
+        factionInviteMethods.removeInviteTask(invited, factionInvite);
 
         Messages.sendMessage(player, "&3invite sent successfully");
 

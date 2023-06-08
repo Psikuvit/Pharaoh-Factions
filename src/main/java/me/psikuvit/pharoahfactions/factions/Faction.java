@@ -56,4 +56,15 @@ public class Faction {
         return membersRank;
     }
 
+    @Override
+    public String toString() {
+        return "Faction{" +
+                "membersRank=" + membersRank +
+                ", name='" + name + '\'' +
+                ", members=" + members +
+                ", owner=" + owner +
+                ", uuid=" + uuid +
+                ", description=" + description +
+                '}';
+    }
 }

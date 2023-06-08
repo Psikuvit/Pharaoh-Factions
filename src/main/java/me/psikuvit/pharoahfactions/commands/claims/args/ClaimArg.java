@@ -17,6 +17,8 @@ import java.util.UUID;
 
 public class ClaimArg extends CommandAbstract {
 
+    private final ClaimUtils claimUtils = ClaimUtils.getInstance();
+
     public ClaimArg(Pharaoh_Factions plugin) {
         super(plugin);
     }
@@ -24,13 +26,14 @@ public class ClaimArg extends CommandAbstract {
     @Override
     public void executeCommand(String[] args, CommandSender sender) {
         Player p = (Player) sender;
+
         Chunk chunk = p.getLocation().getChunk();
 
-        if (ClaimUtils.isChunkTaken(chunk)) {
+        if (claimUtils.isChunkTaken(chunk)) {
             Messages.sendMessage(p, "&cChunk already taken.");
             return;
         }
-        if (ClaimUtils.hasClaim(p.getUniqueId())) {
+        if (claimUtils.hasClaim(p.getUniqueId())) {
             Messages.sendMessage(p, "&cYou already have a claim.");
             return;
         }
@@ -39,7 +42,7 @@ public class ClaimArg extends CommandAbstract {
         Location loc = p.getLocation();
 
         Claim claim = new Claim(args[0], chunks, loc, Collections.emptyList());
-        ClaimUtils.addClaim(p, claim);
+        claimUtils.addClaim(p, claim);
 
         Messages.sendMessage(p, "&bClaimed this chunk.");
     }

@@ -14,6 +14,8 @@ import java.util.UUID;
 
 public class AddMemberArg extends CommandAbstract {
 
+    private final ClaimUtils claimUtils = ClaimUtils.getInstance();
+
     public AddMemberArg(Pharaoh_Factions plugin) {
         super(plugin);
     }
@@ -21,7 +23,6 @@ public class AddMemberArg extends CommandAbstract {
     @Override
     public void executeCommand(String[] args, CommandSender sender) {
         Player p = (Player) sender;
-
         Player member = Bukkit.getPlayer(args[0]);
 
         if (member == null) {
@@ -34,12 +35,12 @@ public class AddMemberArg extends CommandAbstract {
             return;
         }
 
-        if (ClaimUtils.hasClaim(p.getUniqueId())) {
+        if (claimUtils.hasClaim(p.getUniqueId())) {
             Messages.sendMessage(p, "&cYou don't have a claim to invite people");
             return;
         }
 
-        Claim claim = ClaimUtils.getPlayerClaim(p);
+        Claim claim = claimUtils.getPlayerClaim(p);
 
         List<UUID> uuids = claim.getMembers();
         uuids.add(member.getUniqueId());

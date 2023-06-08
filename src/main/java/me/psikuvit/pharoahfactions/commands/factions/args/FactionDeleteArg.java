@@ -3,6 +3,7 @@ package me.psikuvit.pharoahfactions.commands.factions.args;
 import me.psikuvit.pharoahfactions.factions.Faction;
 import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
+import me.psikuvit.pharoahfactions.factions.utils.FactionMethods;
 import me.psikuvit.pharoahfactions.factions.utils.FactionRanks;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.command.CommandSender;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class FactionDeleteArg extends CommandAbstract {
+    private final FactionMethods factionMethods = FactionMethods.getInstance();
 
     public FactionDeleteArg(Pharaoh_Factions plugin) {
         super(plugin);
@@ -29,7 +31,7 @@ public class FactionDeleteArg extends CommandAbstract {
             return;
         }
         Messages.sendMessage(player, "&bFaction was deleted");
-        removeFaction(faction);
+        factionMethods.removeFaction(faction);
     }
 
     @Override

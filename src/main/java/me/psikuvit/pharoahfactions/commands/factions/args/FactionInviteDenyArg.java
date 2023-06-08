@@ -4,6 +4,7 @@ import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import me.psikuvit.pharoahfactions.commands.CommandAbstract;
 import me.psikuvit.pharoahfactions.factions.FactionInvite;
 import me.psikuvit.pharoahfactions.factions.utils.FactionInviteMethods;
+import me.psikuvit.pharoahfactions.factions.utils.FactionMethods;
 import me.psikuvit.pharoahfactions.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -14,6 +15,8 @@ import java.util.List;
 
 public class FactionInviteDenyArg extends CommandAbstract {
 
+    private final FactionMethods factionMethods = FactionMethods.getInstance();
+    private final FactionInviteMethods factionInviteMethods  = FactionInviteMethods.getInstance();
     private Player p;
 
     public FactionInviteDenyArg(Pharaoh_Factions plugin) {
@@ -30,7 +33,7 @@ public class FactionInviteDenyArg extends CommandAbstract {
             return;
         }
 
-        FactionInvite factionInvite = FactionInviteMethods.getInviteByInviter(invited, inviter);
+        FactionInvite factionInvite = factionInviteMethods.getInviteByInviter(invited, inviter);
 
         if (factionInvite == null) { // check if the inviter invited the invited
             Messages.sendMessage(invited, "&cCouldn't find invite from this player");
@@ -39,7 +42,7 @@ public class FactionInviteDenyArg extends CommandAbstract {
         if (invited.isOnline()) { // check if player is online
             Messages.sendMessage(inviter, "&c" + invited.getName() + " denied your invitation");
         }
-        FactionInviteMethods.removeInvite(invited, factionInvite); // remove the invite from the invitations list
+        factionInviteMethods.removeInvite(invited, factionInvite); // remove the invite from the invitations list
 
         Messages.sendMessage(invited, "&bYou successfully denied the invite from " + invited.getName());
     }
@@ -72,7 +75,7 @@ public class FactionInviteDenyArg extends CommandAbstract {
         switch (args.length) {
             case 0: completions.add("deny");
             case 1 : {
-                List<FactionInvite> factionInvites = FactionInviteMethods.getFactionInvites(p);
+                List<FactionInvite> factionInvites = factionInviteMethods.getFactionInvites(p);
                 for (FactionInvite factionInvite : factionInvites) {
                     completions.add(factionInvite.getInviter().getDisplayName());
                 }

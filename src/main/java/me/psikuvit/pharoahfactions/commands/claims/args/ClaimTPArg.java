@@ -15,6 +15,8 @@ import java.util.List;
 
 public class ClaimTPArg extends CommandAbstract {
 
+    private final ClaimUtils claimUtils = ClaimUtils.getInstance();
+
     public ClaimTPArg(Pharaoh_Factions plugin) {
         super(plugin);
     }
@@ -22,7 +24,6 @@ public class ClaimTPArg extends CommandAbstract {
     @Override
     public void executeCommand(String[] args, CommandSender sender) {
         Player p = (Player) sender;
-
         Player toTP = Bukkit.getPlayer(args[0]);
 
         if (toTP == null) {
@@ -34,12 +35,12 @@ public class ClaimTPArg extends CommandAbstract {
             Messages.sendMessage(p, "&cYou can't teleport to yourself");
             return;
         }
-        if (!ClaimUtils.hasClaim(toTP.getUniqueId())) {
+        if (!claimUtils.hasClaim(toTP.getUniqueId())) {
             Messages.sendMessage(p, "&cThis player doesn't have a claim.");
             return;
         }
 
-        Claim claim = ClaimUtils.getPlayerClaim(toTP);
+        Claim claim = claimUtils.getPlayerClaim(toTP);
 
         Location loc = claim.getSpawnLoc();
 

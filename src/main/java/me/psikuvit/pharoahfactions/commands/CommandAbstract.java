@@ -5,8 +5,8 @@ import me.psikuvit.pharoahfactions.Pharaoh_Factions;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
+public abstract class CommandAbstract {
 
-public abstract class CommandAbstract extends FactionMethods {
     protected Pharaoh_Factions plugin;
     public CommandAbstract(final Pharaoh_Factions plugin) {
         this.plugin = plugin;

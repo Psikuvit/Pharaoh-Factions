@@ -7,6 +7,8 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+
 public class FactionInvite {
 
     private final Player inviter;
@@ -49,5 +51,14 @@ public class FactionInvite {
 
     public BaseComponent[] getInviteMessage() {
         return baseComponent;
+    }
+
+    @Override
+    public String toString() {
+        return "FactionInvite{" +
+                "inviter=" + inviter +
+                ", faction=" + faction +
+                ", baseComponent=" + Arrays.toString(baseComponent) +
+                '}';
     }
 }
